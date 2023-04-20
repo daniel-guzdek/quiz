@@ -1,0 +1,10 @@
+.quizMode__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid #000;
+  width: 200px;
+  height: 200px;
+}
