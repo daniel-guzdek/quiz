@@ -11,3 +11,24 @@ export enum Mode {
   MULTI_PLAYER_FULL_CHOICE = "multi_player_full_choice",
   MULTI_PLAYER_THREE_CATEGORIES = "multi_player_three_categories",
 }
+
+export enum Category {
+  BOOKS = 10,
+  FILM,
+  MUSIC,
+  MUSICALS_AND_THEATER,
+  TELEVISION,
+  VIDEO_GAMES,
+  BOARD_GAMES,
+  SCIENCE_AND_NATURE,
+  COMPUTERS,
+  MATHEMATICS,
+  MYTHOLOGY,
+  SPORTS,
+  GEOGRAPHY,
+  HISTORY,
+  POLITICS,
+  ART,
+  CELEBRITIES,
+  ANIMALS,
+}
