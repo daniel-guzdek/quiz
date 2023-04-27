@@ -1,6 +1,6 @@
+import { InitialState } from "./../../ts/interfaces/app_interfaces";
 import { ActionType } from "../action-types/index";
 import { Action } from "../actions";
-import { InitialState } from "../../ts/interfaces/app_interfaces";
 
 const initialState = {
   quiz_mode: "",
@@ -13,10 +13,7 @@ const initialState = {
   users: [],
 };
 
-const reducer = (
-  state: InitialState = initialState,
-  action: Action
-): object => {
+const reducer = (state: InitialState = initialState, action: Action) => {
   switch (action.type) {
     case ActionType.RESET_STORE:
       return {
@@ -82,6 +79,15 @@ const reducer = (
       return {
         ...state,
         quiz_mode_is_set: action.payload,
+      };
+    case ActionType.SET_PLAYER_QUIZ_DATA:
+      return {
+        ...state,
+        users: [
+          ...state.users,
+          (state.users[action.payload.userId - 1].quiz_data.selectedCategories =
+            action.payload.selectedCategories),
+        ].splice(0, state.users.length),
       };
     case ActionType.COUNT_SCORE:
       return {
