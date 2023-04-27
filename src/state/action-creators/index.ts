@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+import { Category } from "../../ts/types/app_types";
 import { ActionType } from "../action-types";
 import { Action } from "../actions/index";
 
@@ -39,7 +40,18 @@ export const addUserName = (id: number, name: string) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.ADD_USER_NAME,
-      payload: { id: id, name: name },
+      payload: {
+        id: id,
+        name: name,
+        score: 0,
+        correct_answers: 0,
+        incorrect_answers: 0,
+        total_answers: 0,
+        is_winner: false,
+        quiz_data: {
+          selected_categories: [],
+        },
+      },
     });
   };
 };
@@ -76,6 +88,21 @@ export const setIsQuizModeSet = (quiz_mode_is_set: boolean) => {
     dispatch({
       type: ActionType.SET_IS_QUIZ_MODE_SET,
       payload: { quiz_mode_is_set },
+    });
+  };
+};
+
+export const setPlayerQuizData = (
+  userId: number,
+  selectedCategories: Category[]
+) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.SET_PLAYER_QUIZ_DATA,
+      payload: {
+        userId: userId,
+        selectedCategories: selectedCategories,
+      },
     });
   };
 };

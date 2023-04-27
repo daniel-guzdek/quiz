@@ -1,3 +1,4 @@
+import { Category } from "../../ts/types/app_types";
 import { ActionType } from "../action-types/index";
 
 interface ResetStoreAction {
@@ -24,7 +25,16 @@ interface SetIsFormValidAction {
 
 interface AddUserNameAction {
   type: ActionType.ADD_USER_NAME;
-  payload: { id: number; name: string };
+  payload: {
+    id: number;
+    name: string;
+    score: number;
+    correct_answers: number;
+    incorrect_answers: number;
+    total_answers: number;
+    is_winner: false;
+    quiz_data: {};
+  };
 }
 
 interface ClearUsersArrayAction {
@@ -42,6 +52,14 @@ interface SetIsQuizModeSetAction {
   payload: { quiz_mode_is_set: boolean };
 }
 
+interface SetPlayerQuizDataAction {
+  type: ActionType.SET_PLAYER_QUIZ_DATA;
+  payload: {
+    userId: number;
+    selectedCategories: Category[] | [];
+  };
+}
+
 interface CountScoreAction {
   type: ActionType.COUNT_SCORE;
   payload: { amount: number };
@@ -57,4 +75,5 @@ export type Action =
   | ClearUsersArrayAction
   | SetQuizModeAction
   | SetIsQuizModeSetAction
+  | SetPlayerQuizDataAction
   | CountScoreAction;

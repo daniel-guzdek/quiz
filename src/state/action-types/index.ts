@@ -8,5 +8,6 @@ export enum ActionType {
   CLEAR_USERS_ARRAY = "clear-users-array",
   SET_QUIZ_MODE = "set-quiz-mode",
   SET_IS_QUIZ_MODE_SET = "set-is-quiz-mode-set",
+  SET_PLAYER_QUIZ_DATA = "set-player-quiz-data",
   COUNT_SCORE = "count-score",
 }
