@@ -2,16 +2,16 @@ import { useSelector, useDispatch } from "react-redux";
 import QuizModesPanel from "./components/QuizModesPanel";
 import { RootState } from "./state/reducers";
 import PlayersMode from "./views/PlayersMode";
+import SelectedQuizModeSettingsView from "./views/SelectedQuizModeSettingsView";
 import UserForm from "./views/UserForm";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-  const { players_mode_is_set, is_form_valid } = useSelector(
+  const { players_mode_is_set, is_form_valid, quiz_mode_is_set } = useSelector(
     (state: RootState) => state.quiz
   );
 
   const wholeState = useSelector((state: RootState) => state.quiz);
-  console.log(wholeState);
 
   const handleReset = () => {
     dispatch({
@@ -28,6 +28,7 @@ const App: React.FC = () => {
         {!players_mode_is_set ? <PlayersMode /> : <UserForm />}
       </div>
       {is_form_valid && <QuizModesPanel />}
+      {quiz_mode_is_set && <SelectedQuizModeSettingsView />}
     </div>
   );
 };
