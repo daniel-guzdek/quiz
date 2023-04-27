@@ -63,6 +63,14 @@ const UserForm: React.FC = () => {
             inputs[0].ref?.current!.value === ""
               ? `Player 1`
               : inputs[0].ref?.current!.value,
+          score: 0,
+          correct_answers: 0,
+          incorrect_answers: 0,
+          total_answers: 0,
+          is_winner: false,
+          quiz_data: {
+            selected_categories: [],
+          },
         },
       });
     } else {
@@ -76,6 +84,14 @@ const UserForm: React.FC = () => {
                 inputs[i].ref?.current!.value === ""
                   ? `Player ${i + 1}`
                   : inputs[i].ref?.current!.value,
+              score: 0,
+              correct_answers: 0,
+              incorrect_answers: 0,
+              total_answers: 0,
+              is_winner: false,
+              quiz_data: {
+                selectedCategories: [],
+              },
             },
           });
         }
