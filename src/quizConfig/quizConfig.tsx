@@ -30,17 +30,12 @@ export const quizConfig = {
       id: 4,
       variant: "ON THE EDGE",
       icon: "d",
-      isSinglePlayerMode: false,
+      isSinglePlayerMode: true,
       isMultiPlayerMode: true,
-      description: "On the Edge description",
-    },
-    {
-      id: 5,
-      variant: "TAKE IT OR LEAVE IT",
-      icon: "e",
-      isSinglePlayerMode: false,
-      isMultiPlayerMode: true,
-      description: "Take it or leave it description",
+      requiredNumOfPlayers: [2, 4],
+      description:
+        "The second player chooses the question categories for his opponent",
+      categoriesNum: 3,
     },
   ],
   categories: [
