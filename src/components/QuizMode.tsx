@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/reducers";
+import { User } from "../ts/types/app_types";
 import "../styles/quizMode.css";
 
 const QuizMode = (props: {
@@ -12,6 +13,7 @@ const QuizMode = (props: {
   const dispatch = useDispatch();
 
   const wholeState = useSelector((state: RootState) => state.quiz);
+  const users = useSelector((state: RootState): User[] => state.quiz["users"]);
 
   const modeHandler = () => {
     console.log(wholeState);
@@ -26,6 +28,18 @@ const QuizMode = (props: {
       type: "set-is-quiz-mode-set",
       payload: true,
     });
+
+    if (quizModeName === "OMNIBUS") {
+      users.map((user, index) => {
+        return dispatch({
+          type: "questions-should-load",
+          payload: {
+            userId: index + 1,
+            questionsShouldLoad: true,
+          },
+        });
+      });
+    }
   };
 
   return (
