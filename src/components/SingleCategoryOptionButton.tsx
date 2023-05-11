@@ -1,5 +1,8 @@
 import { useEffect, useState, SetStateAction } from "react";
+import { RootState } from "../state/reducers";
+import { useDispatch, useSelector } from "react-redux";
 import { Category, SelectedCategories } from "../ts/types/app_types";
+import { setCustomModePlayerId } from "../utils/setCustomModePlayerId";
 
 type SingleCategoryOptionButtonProps = {
   categoryId: number;
@@ -16,22 +19,46 @@ type SingleCategoryOptionButtonProps = {
 const SingleCategoryOptionButton = (props: SingleCategoryOptionButtonProps) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
+  const { quiz_mode, users } = useSelector((state: RootState) => state.quiz);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     !props.selectedCategories.length && setIsDisabled(false);
   }, [props.selectedCategories]);
 
   const handleCategoryBtn = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // const button: HTMLButtonElement = event.currentTarget;
-    // setClickedButton(button.name);
-
-    props.setSelectedCategories((selectedCategories: SelectedCategories) => [
-      ...selectedCategories,
-      {
-        id: props.categoryId,
-        name: props.categoryName,
-        questions: [],
-      },
-    ]);
+    if (quiz_mode === "ON THE EDGE") {
+      props.setSelectedCategories((selectedCategories: SelectedCategories) => [
+        ...selectedCategories,
+        {
+          id: props.categoryId,
+          name: props.categoryName,
+          questions: [],
+        },
+      ]);
+      dispatch({
+        type: "set-player-quiz-data",
+        payload: {
+          userId:
+            typeof props.selectedUserId !== "undefined" &&
+            setCustomModePlayerId(props.selectedUserId, users),
+          selectedCategories: [
+            ...props.selectedCategories,
+            { id: props.categoryId, name: props.categoryName, questions: [] },
+          ],
+          questionsShouldLoad: false,
+        },
+      });
+    } else {
+      props.setSelectedCategories((selectedCategories: SelectedCategories) => [
+        ...selectedCategories,
+        {
+          id: props.categoryId,
+          name: props.categoryName,
+          questions: [],
+        },
+      ]);
+    }
 
     setIsDisabled(true);
   };
