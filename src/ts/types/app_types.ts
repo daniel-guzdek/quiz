@@ -1,13 +1,15 @@
 export type User = {
-  id: number | undefined;
-  name: string | undefined;
+  id: number;
+  name: string;
   score: number;
   correct_answers: number;
   incorrect_answers: number;
   total_answers: number;
-  is_winner: false;
+  is_winner: boolean;
   quiz_data: {
+    questionsShouldLoad: boolean;
     selectedCategories: Category[];
+    allQuestions: Question[] | [];
   };
 };
 

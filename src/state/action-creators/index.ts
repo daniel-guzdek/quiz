@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Category } from "../../ts/types/app_types";
+import { Category, Question, User } from "../../ts/types/app_types";
 import { ActionType } from "../action-types";
 import { Action } from "../actions/index";
 
@@ -49,7 +49,9 @@ export const addUserName = (id: number, name: string) => {
         total_answers: 0,
         is_winner: false,
         quiz_data: {
-          selected_categories: [],
+          questionsShouldLoad: false,
+          selectedCategories: [],
+          allQuestions: [],
         },
       },
     });
@@ -102,6 +104,46 @@ export const setPlayerQuizData = (
       payload: {
         userId: userId,
         selectedCategories: selectedCategories,
+        questionsShouldLoad: true,
+      },
+    });
+  };
+};
+
+export const setQuestionsShouldLoad = (
+  userId: number,
+  questionsShouldLoad: boolean
+) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.SET_QUESTIONS_SHOULD_LOAD,
+      payload: { userId: userId, questionsShouldLoad },
+    });
+  };
+};
+
+export const setQuestionsForEachUser = (
+  userId: number,
+  allQuestions: Question[]
+) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.SET_QUESTIONS_FOR_EACH_USER,
+      payload: {
+        userId,
+        allQuestions,
+      },
+    });
+  };
+};
+
+export const resetUserCategories = (userId: number, users: User[]) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.RESET_USER_CATEGORIES,
+      payload: {
+        userId,
+        users,
       },
     });
   };

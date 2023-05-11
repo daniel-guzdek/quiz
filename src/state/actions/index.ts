@@ -1,4 +1,4 @@
-import { Category } from "../../ts/types/app_types";
+import { Category, Question, User } from "../../ts/types/app_types";
 import { ActionType } from "../action-types/index";
 
 interface ResetStoreAction {
@@ -32,8 +32,12 @@ interface AddUserNameAction {
     correct_answers: number;
     incorrect_answers: number;
     total_answers: number;
-    is_winner: false;
-    quiz_data: {};
+    is_winner: boolean;
+    quiz_data: {
+      questionsShouldLoad: boolean;
+      selectedCategories: [];
+      allQuestions: [];
+    };
   };
 }
 
@@ -57,6 +61,31 @@ interface SetPlayerQuizDataAction {
   payload: {
     userId: number;
     selectedCategories: Category[] | [];
+    questionsShouldLoad: true;
+  };
+}
+
+interface SetQuestionsShouldLoad {
+  type: ActionType.SET_QUESTIONS_SHOULD_LOAD;
+  payload: {
+    userId: number;
+    questionsShouldLoad: boolean;
+  };
+}
+
+interface SetQuestionsForEachUser {
+  type: ActionType.SET_QUESTIONS_FOR_EACH_USER;
+  payload: {
+    userId: number;
+    allQuestions: Question[];
+  };
+}
+
+interface ResetUserCategories {
+  type: ActionType.RESET_USER_CATEGORIES;
+  payload: {
+    userId: number;
+    users: User[];
   };
 }
 
@@ -76,4 +105,7 @@ export type Action =
   | SetQuizModeAction
   | SetIsQuizModeSetAction
   | SetPlayerQuizDataAction
+  | SetQuestionsShouldLoad
+  | SetQuestionsForEachUser
+  | ResetUserCategories
   | CountScoreAction;

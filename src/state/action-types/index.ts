@@ -9,5 +9,8 @@ export enum ActionType {
   SET_QUIZ_MODE = "set-quiz-mode",
   SET_IS_QUIZ_MODE_SET = "set-is-quiz-mode-set",
   SET_PLAYER_QUIZ_DATA = "set-player-quiz-data",
+  RESET_USER_CATEGORIES = "reset-user-categories",
+  SET_QUESTIONS_SHOULD_LOAD = "questions-should-load",
+  SET_QUESTIONS_FOR_EACH_USER = "set-questions-for-each-user",
   COUNT_SCORE = "count-score",
 }
