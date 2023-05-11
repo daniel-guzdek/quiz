@@ -69,7 +69,9 @@ const UserForm: React.FC = () => {
           total_answers: 0,
           is_winner: false,
           quiz_data: {
-            selected_categories: [],
+            questionsShouldLoad: false,
+            selectedCategories: [],
+            allQuestions: [],
           },
         },
       });
@@ -90,7 +92,9 @@ const UserForm: React.FC = () => {
               total_answers: 0,
               is_winner: false,
               quiz_data: {
+                questionsShouldLoad: false,
                 selectedCategories: [],
+                allQuestions: [],
               },
             },
           });
