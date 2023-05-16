@@ -1,11 +1,12 @@
 import { Category } from "../ts/enums/app_enums";
+import { GiHorseHead, GiAxeSword, GiBookmark } from "react-icons/gi";
 
 export const quizConfig = {
   quizModes: [
     {
       id: 1,
       variant: "MY THING",
-      icon: "a",
+      icon: <GiHorseHead />,
       isSinglePlayerMode: true,
       isMultiPlayerMode: false,
       description: "Questions from choosen subject",
@@ -13,7 +14,12 @@ export const quizConfig = {
     {
       id: 2,
       variant: "MY THING VS. MY THING",
-      icon: "b",
+      icon: (
+        <>
+          <GiHorseHead />
+          <GiHorseHead style={{ rotate: "180deg" }} />
+        </>
+      ),
       isSinglePlayerMode: false,
       isMultiPlayerMode: true,
       description: "Questions from choosen subject for each Player",
@@ -21,7 +27,7 @@ export const quizConfig = {
     {
       id: 3,
       variant: "OMNIBUS",
-      icon: "c",
+      icon: <GiBookmark />,
       isSinglePlayerMode: true,
       isMultiPlayerMode: true,
       description: "Questions from all avaible subjects",
@@ -29,12 +35,12 @@ export const quizConfig = {
     {
       id: 4,
       variant: "ON THE EDGE",
-      icon: "d",
+      icon: <GiAxeSword />,
       isSinglePlayerMode: true,
       isMultiPlayerMode: true,
       requiredNumOfPlayers: [2, 4],
       description:
-        "The second player chooses the question categories for his opponent",
+        "The other Player selects the question categories for his opponent",
       categoriesNum: 3,
     },
   ],
@@ -146,6 +152,36 @@ export const quizConfig = {
       name: "Animals",
       valueForUrl: Category.ANIMALS,
       color: "springgreen",
+    },
+    {
+      id: 19,
+      name: "Vehicles",
+      valueForUrl: Category.VEHICLES,
+      color: "rgb(34, 78, 123)",
+    },
+    {
+      id: 20,
+      name: "Comics",
+      valueForUrl: Category.COMICS,
+      color: "rgb(213, 22, 157)",
+    },
+    {
+      id: 21,
+      name: "Gadgets",
+      valueForUrl: Category.GADGETS,
+      color: "rgb(13, 122, 134)",
+    },
+    {
+      id: 22,
+      name: "Japanese Anime & Manga",
+      valueForUrl: Category.JAPANESE_ANIME_AND_MANGA,
+      color: "rgb(22, 178, 16)",
+    },
+    {
+      id: 23,
+      name: "Cartoon & Animations",
+      valueForUrl: Category.CARTOON_AND_ANIMATIONS,
+      color: "rgb(254, 69, 245)",
     },
   ],
 };

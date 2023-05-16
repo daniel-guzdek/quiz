@@ -9,15 +9,15 @@ export const renderInfo = (
     case users.length % 2 === 1 && playerId === users.length:
       return `${playerName}, AI will select categories for you`;
     case playerId === 1:
-      return `${playerName}, please select Categories for Player ${users[playerId].name}`;
+      return `${playerName}, please select Categories for ${users[playerId].name}`;
     case playerId === 2:
-      return `${playerName}, please select Categories for Player ${
+      return `${playerName}, please select Categories for ${
         users[playerId - 2].name
       }`;
     case playerId === 3:
-      return `${playerName}, please select Categories for Player ${users[playerId].name}`;
+      return `${playerName}, please select Categories for ${users[playerId].name}`;
     case playerId === 4:
-      return `${playerName}, please select Categories for Player ${
+      return `${playerName}, please select Categories for ${
         users[playerId - 2].name
       }`;
     case playerId === 5:

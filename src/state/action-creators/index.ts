@@ -137,6 +137,15 @@ export const setQuestionsForEachUser = (
   };
 };
 
+export const setActualUserId = (userId: number) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.SET_ACTUAL_USER_ID,
+      payload: { userId },
+    });
+  };
+};
+
 export const resetUserCategories = (userId: number, users: User[]) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({

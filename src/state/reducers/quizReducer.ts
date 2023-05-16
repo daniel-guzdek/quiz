@@ -10,6 +10,7 @@ const initialState = {
   is_form_valid: false,
   number_of_players: 0,
   number_of_questions: 10,
+  actual_user_id: 1,
   users: [],
 };
 
@@ -24,6 +25,7 @@ const reducer = (state: InitialState = initialState, action: Action) => {
         is_form_valid: false,
         number_of_players: 0,
         number_of_questions: 10,
+        actual_user_id: 1,
         users: [],
       };
     case ActionType.SET_SINGLE_PLAYER_MODE:
@@ -119,6 +121,11 @@ const reducer = (state: InitialState = initialState, action: Action) => {
           (state.users[action.payload.userId - 1].quiz_data.selectedCategories =
             []),
         ].splice(0, state.users.length),
+      };
+    case ActionType.SET_ACTUAL_USER_ID:
+      return {
+        ...state,
+        actual_user_id: action.payload,
       };
     case ActionType.COUNT_SCORE:
       return {

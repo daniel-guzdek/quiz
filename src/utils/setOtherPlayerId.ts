@@ -1,9 +1,6 @@
 import { User } from "../ts/types/app_types";
 
-export const setCustomModePlayerId = (
-  playerId: number,
-  users: User[]
-): number => {
+export const setOtherPlayerId = (playerId: number, users: User[]): number => {
   switch (true) {
     case users.length % 2 === 1 && playerId === users.length:
       return playerId;

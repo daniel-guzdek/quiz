@@ -89,6 +89,11 @@ interface ResetUserCategories {
   };
 }
 
+interface SetActualUserIdAction {
+  type: ActionType.SET_ACTUAL_USER_ID;
+  payload: { userId: number };
+}
+
 interface CountScoreAction {
   type: ActionType.COUNT_SCORE;
   payload: { amount: number };
@@ -108,4 +113,5 @@ export type Action =
   | SetQuestionsShouldLoad
   | SetQuestionsForEachUser
   | ResetUserCategories
+  | SetActualUserIdAction
   | CountScoreAction;

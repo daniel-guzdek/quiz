@@ -1,7 +1,12 @@
 import React, { useRef } from "react";
 import { RootState } from "../state/reducers";
 import { useDispatch, useSelector } from "react-redux";
+import Typography from "@mui/material/Typography";
 import SelectNumberOfPlayers from "../components/SelectNumberOfPlayers";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import { ImUsers } from "react-icons/im";
+import Button from "@mui/material/Button";
 
 const UserForm: React.FC = () => {
   const { players_mode, number_of_players, is_form_valid } = useSelector(
@@ -50,59 +55,38 @@ const UserForm: React.FC = () => {
 
   const userFormHandler = (event: React.FormEvent) => {
     event.preventDefault();
+
     dispatch({
       type: "clear-users-array",
       payload: [],
     });
-    if (players_mode === "single_player") {
-      dispatch({
-        type: "add-user-name",
-        payload: {
-          id: 1,
-          name:
-            inputs[0].ref?.current!.value === ""
-              ? `Player 1`
-              : inputs[0].ref?.current!.value,
-          score: 0,
-          correct_answers: 0,
-          incorrect_answers: 0,
-          total_answers: 0,
-          is_winner: false,
-          quiz_data: {
-            questionsShouldLoad: false,
-            selectedCategories: [],
-            allQuestions: [],
-          },
-        },
-      });
-    } else {
-      const createRefsDynamically = (number_of_players: number) => {
-        for (let i = 0; i < number_of_players; i++) {
-          dispatch({
-            type: "add-user-name",
-            payload: {
-              id: i + 1,
-              name:
-                inputs[i].ref?.current!.value === ""
-                  ? `Player ${i + 1}`
-                  : inputs[i].ref?.current!.value,
-              score: 0,
-              correct_answers: 0,
-              incorrect_answers: 0,
-              total_answers: 0,
-              is_winner: false,
-              quiz_data: {
-                questionsShouldLoad: false,
-                selectedCategories: [],
-                allQuestions: [],
-              },
-            },
-          });
-        }
-      };
 
-      createRefsDynamically(number_of_players);
-    }
+    const dispatchUsers = (number_of_players: number) => {
+      for (let i = 0; i < number_of_players; i++) {
+        dispatch({
+          type: "add-user-name",
+          payload: {
+            id: i + 1,
+            name:
+              inputs[i].ref?.current!.value === ""
+                ? `Player ${i + 1}`
+                : inputs[i].ref?.current!.value,
+            score: 0,
+            correct_answers: 0,
+            incorrect_answers: 0,
+            total_answers: 0,
+            is_winner: false,
+            quiz_data: {
+              questionsShouldLoad: false,
+              selectedCategories: [],
+              allQuestions: [],
+            },
+          },
+        });
+      }
+    };
+
+    dispatchUsers(number_of_players);
   };
 
   const displayGameModesPanel = () => {
@@ -115,10 +99,12 @@ const UserForm: React.FC = () => {
   const renderNameInputs = inputs
     .map((input, index) => {
       return (
-        <input
-          id={input.id}
+        <TextField
+          id="outlined-basic"
+          label={input.placeholder}
+          variant="outlined"
           key={input.key}
-          ref={input.ref}
+          inputRef={input.ref}
           type={input.type}
           placeholder={input.placeholder}
           defaultValue={`Player ${index + 1}`}
@@ -128,39 +114,89 @@ const UserForm: React.FC = () => {
     .slice(0, number_of_players);
 
   const renderForm = (
-    <form onSubmit={userFormHandler}>
+    <Box
+      component="form"
+      sx={{
+        "& > :not(style)": { m: 1, width: "25ch" },
+      }}
+      noValidate
+      autoComplete="off"
+      onSubmit={userFormHandler}
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        flexWrap: "wrap",
+      }}
+    >
       {renderNameInputs}
-      <button type="submit" onClick={() => displayGameModesPanel()}>
+      <Button
+        type="submit"
+        onClick={() => displayGameModesPanel()}
+        variant="contained"
+        color="success"
+        style={{ width: "110px", height: "4em" }}
+      >
         Done
-      </button>
-    </form>
+      </Button>
+    </Box>
   );
 
   return (
-    <div>
-      <p>
-        PLAYERS MODE:
+    <Box
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "50px",
+      }}
+    >
+      <Typography variant="h4" gutterBottom mb={4}>
+        Select number of Players
+      </Typography>
+      <Typography variant="subtitle2" gutterBottom mb={4}>
+        players mode:{" "}
         {players_mode === ""
           ? "?"
           : players_mode === "single_player"
           ? "SINGLE PLAYER"
           : "MULTI PLAYER"}
-      </p>
-      <h2>Settings:</h2>
+      </Typography>
       {players_mode === "single_player" ? (
-        <div>
-          <button onClick={() => dispatch({ type: "set-multi-player-mode" })}>
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            onClick={() => {
+              dispatch({ type: "set-multi-player-mode" });
+              dispatch({
+                type: "select-number-of-players",
+                payload: 2,
+              });
+            }}
+            variant="outlined"
+            color="primary"
+            endIcon={<ImUsers />}
+            style={{ marginBottom: "30px" }}
+          >
             Multi Player
-          </button>
-          {renderForm}
-        </div>
+          </Button>
+          <Box>{renderForm}</Box>
+        </Box>
       ) : (
         <div>
           {!is_form_valid && <SelectNumberOfPlayers />}
           {!number_of_players ? null : renderForm}
         </div>
       )}
-    </div>
+    </Box>
   );
 };
 

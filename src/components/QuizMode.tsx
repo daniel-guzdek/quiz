@@ -1,7 +1,10 @@
-import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/reducers";
 import { User } from "../ts/types/app_types";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { CardActionArea } from "@mui/material";
 import "../styles/quizMode.css";
 
 const QuizMode = (props: {
@@ -9,19 +12,14 @@ const QuizMode = (props: {
   icon: any;
   description: string;
 }) => {
-  const mode_ref = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
-  const wholeState = useSelector((state: RootState) => state.quiz);
   const users = useSelector((state: RootState): User[] => state.quiz["users"]);
 
   const modeHandler = () => {
-    console.log(wholeState);
-    const quizModeName = mode_ref.current?.childNodes[1].firstChild?.nodeValue;
-
     dispatch({
       type: "set-quiz-mode",
-      payload: quizModeName,
+      payload: props.variant,
     });
 
     dispatch({
@@ -29,7 +27,7 @@ const QuizMode = (props: {
       payload: true,
     });
 
-    if (quizModeName === "OMNIBUS") {
+    if (props.variant === "OMNIBUS") {
       users.map((user, index) => {
         return dispatch({
           type: "questions-should-load",
@@ -43,15 +41,28 @@ const QuizMode = (props: {
   };
 
   return (
-    <div
-      ref={mode_ref}
-      onClick={() => modeHandler()}
-      className="quizMode__wrapper"
-    >
-      <span>{props.icon}</span>
-      <span>{props.variant}</span>
-      <em>{props.description}</em>
-    </div>
+    <Card onClick={() => modeHandler()} sx={{ width: 300, margin: "10px" }}>
+      <CardActionArea>
+        <CardContent
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography gutterBottom variant="h2" component="div" mt={2} mb={0}>
+            {props.icon}
+          </Typography>
+          <Typography gutterBottom variant="h6" component="div" mt={1}>
+            {props.variant}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {props.description}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
 };
 

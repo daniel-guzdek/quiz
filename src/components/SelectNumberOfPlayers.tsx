@@ -1,43 +1,59 @@
-import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/reducers";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const SelectNumberOfPlayers = () => {
   const { number_of_players } = useSelector((state: RootState) => state.quiz);
-  const select_input_ref = useRef<HTMLSelectElement>(null);
   const dispatch = useDispatch();
 
-  const handleChange = () => {
-    if (select_input_ref.current?.value === "1") {
+  const handleChange = (event: SelectChangeEvent) => {
+    if (String(event.target.value) === "1") {
       dispatch({
         type: "set-single-player-mode",
       });
     } else {
       dispatch({
         type: "select-number-of-players",
-        payload: Number(select_input_ref.current?.value),
+        payload: Number(event.target.value),
       });
     }
   };
 
   return (
-    <div>
-      <label>
-        Select number of Players:
-        <select
+    <Box
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <FormControl sx={{ m: 1, minWidth: 135 }}>
+        <InputLabel id="demo-simple-select-helper-label">
+          Number of Players
+        </InputLabel>
+        <Select
+          labelId="demo-simple-select-helper-label"
+          id="demo-simple-select-helper"
           value={number_of_players}
-          ref={select_input_ref}
+          label="Number of Players"
           onChange={handleChange}
         >
-          <option value={""}>select value</option>
-          <option value={"1"}>1</option>
-          <option value={"2"}>2</option>
-          <option value={"3"}>3</option>
-          <option value={"4"}>4</option>
-          <option value={"5"}>5</option>
-        </select>
-      </label>
-    </div>
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={1}>1</MenuItem>
+          <MenuItem value={2}>2</MenuItem>
+          <MenuItem value={3}>3</MenuItem>
+          <MenuItem value={4}>4</MenuItem>
+          <MenuItem value={5}>5</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
   );
 };
 

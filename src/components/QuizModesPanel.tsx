@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../state/reducers";
 import { quizConfig } from "../quizConfig/quizConfig";
 import QuizMode from "./QuizMode";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import "../styles/quizModes.css";
 
 const QuizModesPanel = () => {
@@ -35,10 +37,20 @@ const QuizModesPanel = () => {
     });
 
   return (
-    <div style={{ display: `${quiz_mode_is_set ? "none" : "block"}` }}>
-      <h1>Select Quiz Mode</h1>
-      <div className="quizModes__wrapper">{renderModes}</div>
-    </div>
+    <Box
+      style={{
+        display: `${quiz_mode_is_set ? "none" : "flex"}`,
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "50px",
+      }}
+    >
+      <Typography variant="h4" gutterBottom mb={4}>
+        Select Quiz Mode
+      </Typography>
+      <Box className="quizModes__wrapper">{renderModes}</Box>
+    </Box>
   );
 };
 

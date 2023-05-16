@@ -12,5 +12,6 @@ export enum ActionType {
   RESET_USER_CATEGORIES = "reset-user-categories",
   SET_QUESTIONS_SHOULD_LOAD = "questions-should-load",
   SET_QUESTIONS_FOR_EACH_USER = "set-questions-for-each-user",
+  SET_ACTUAL_USER_ID = "set-actual-user-id",
   COUNT_SCORE = "count-score",
 }
