@@ -1,18 +1,20 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { quizConfig } from "../quizConfig/quizConfig";
 import Typography from "@mui/material/Typography";
-import SingleCategoryOptionButton from "./SingleCategoryOptionButton";
-import { User } from "../ts/types/app_types";
-import { Category } from "../ts/types/app_types";
+import CategoryOptionButton from "./CategoryOptionButton";
+import { User } from "../ts/types/appTypes";
+import { Category } from "../ts/types/appTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/reducers";
 import { renderInfo } from "../utils/renderInfo";
 import { setOtherPlayerId } from "../utils/setOtherPlayerId";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import { displayDefaultCategoriesCheck } from "../utils/displayDefaultCategoriesCheck";
+import Title from "./common/Title/Title";
+import Btn from "./common/Buttons/Button";
+import "../styles/app.less";
 
 type SelectQuestionsCategoryProps = {
   playerId: number;
@@ -28,52 +30,65 @@ const SelectQuestionsCategory: React.FC<SelectQuestionsCategoryProps> = (
     []
   );
 
-  const { quiz_mode } = useSelector((state: RootState) => state.quiz);
-  const actual_user_id = useSelector(
-    (state: RootState): number => state.quiz["actual_user_id"]
+  const { quizMode } = useSelector((state: RootState) => state.quiz);
+  const actualUserId = useSelector(
+    (state: RootState): number => state.quiz["actualUserId"]
   );
   const dispatch = useDispatch();
 
+  const questionsShouldLoadPayload = useMemo(
+    () => ({
+      userId:
+        quizMode === "ON THE EDGE"
+          ? setOtherPlayerId(props.playerId, props.players)
+          : props.playerId,
+      questionsShouldLoad: true,
+    }),
+    [props.playerId, props.players, quizMode]
+  );
+
+  const getPlayerQuizDataPayload = useCallback(
+    (userId: number, questionsShouldLoad: boolean) => ({
+      userId,
+      selectedCategories: selectedCategories,
+      questionsShouldLoad,
+    }),
+    [selectedCategories]
+  );
+
   const handleAcceptCategoriesBtn = useCallback(() => {
-    if (quiz_mode === "ON THE EDGE") {
+    if (quizMode === "ON THE EDGE") {
       dispatch({
         type: "set-actual-user-id",
         payload:
           props.playerId + 1 > props.players.length ? 1 : props.playerId + 1,
       });
-
       dispatch({
         type: "questions-should-load",
-        payload: {
-          userId:
-            typeof props.playerId !== "undefined" &&
-            setOtherPlayerId(props.playerId, props.players),
-          questionsShouldLoad: true,
-        },
+        payload: questionsShouldLoadPayload,
       });
     } else {
       dispatch({
         type: "set-player-quiz-data",
-        payload: {
-          userId: props.playerId,
-          selectedCategories: selectedCategories,
-          questionsShouldLoad: true,
-        },
+        payload: getPlayerQuizDataPayload(props.playerId, true),
       });
-
       dispatch({
         type: "questions-should-load",
-        payload: {
-          userId: props.playerId,
-          questionsShouldLoad: true,
-        },
+        payload: questionsShouldLoadPayload,
       });
     }
-  }, [dispatch, props.playerId, props.players, quiz_mode, selectedCategories]);
+  }, [
+    dispatch,
+    props.playerId,
+    props.players,
+    quizMode,
+    getPlayerQuizDataPayload,
+    questionsShouldLoadPayload,
+  ]);
 
   const renderCategoryOptionsButtons = quizConfig.categories.map((category) => {
     return (
-      <SingleCategoryOptionButton
+      <CategoryOptionButton
         key={category.id}
         categoryId={category.id}
         categoryName={category.name}
@@ -84,44 +99,96 @@ const SelectQuestionsCategory: React.FC<SelectQuestionsCategoryProps> = (
         selectedUserName={props.playerName}
         setSelectedCategories={setSelectedCategories}
         selectedCategories={selectedCategories}
+        disabled
       />
     );
   });
 
-  const renderSelectedCategories = selectedCategories.length
-    ? selectedCategories.map((category) => (
-        <Chip
-          key={category.id}
-          label={category.name}
-          variant="outlined"
-          style={{ border: `1px solid #ccc`, margin: "0 5px" }}
-        />
-      ))
-    : "-";
+  const renderSelectedCategories = (categories: Category[]) => {
+    return categories.length
+      ? categories.map((category) => (
+          <Chip
+            key={category.id}
+            label={category.name}
+            variant="outlined"
+            style={{ border: `1px solid #ccc`, margin: "0 5px" }}
+          />
+        ))
+      : "-";
+  };
+
+  const resetCatPayload = useMemo(
+    () => ({
+      userId:
+        quizMode === "ON THE EDGE" && props.players.length > 1
+          ? setOtherPlayerId(props.playerId, props.players)
+          : props.playerId,
+      users: props.players,
+      questionsShouldLoad: false,
+    }),
+    [quizMode, props.playerId, props.players]
+  );
 
   const handleResetCategories = useCallback(() => {
-    if (quiz_mode === "ON THE EDGE" && props.players.length > 1) {
-      dispatch({
-        type: "reset-user-categories",
-        payload: {
-          userId: setOtherPlayerId(props.playerId, props.players),
-          users: props.players,
-          questionsShouldLoad: false,
-        },
-      });
-      setSelectedCategories([]);
+    dispatch({
+      type: "reset-user-categories",
+      payload: resetCatPayload,
+    });
+    setSelectedCategories([]);
+  }, [dispatch, resetCatPayload]);
+
+  const disabledResetBtnCondition = useCallback(() => {
+    if (quizMode === "ON THE EDGE") {
+      return (
+        props.players[setOtherPlayerId(props.playerId, props.players) - 1]
+          .quizData.selectedCategories.length === 0 ||
+        props.players[setOtherPlayerId(props.playerId, props.players) - 1]
+          .quizData.questionsShouldLoad ||
+        (props.players.length % 2 === 1 &&
+          props.playerId === props.players.length)
+      );
     } else {
-      dispatch({
-        type: "reset-user-categories",
-        payload: {
-          userId: props.playerId,
-          users: props.players,
-          questionsShouldLoad: false,
-        },
-      });
-      setSelectedCategories([]);
+      return props.questionsShouldLoad || !selectedCategories.length;
     }
-  }, [props.playerId, props.players, dispatch, quiz_mode]);
+  }, [
+    props.playerId,
+    props.players,
+    props.questionsShouldLoad,
+    quizMode,
+    selectedCategories.length,
+  ]);
+
+  const disabledRandomCatBtnCondition = useCallback(() => {
+    if (quizMode === "ON THE EDGE") {
+      return (
+        props.players[setOtherPlayerId(props.playerId, props.players) - 1]
+          .quizData.questionsShouldLoad ||
+        (props.players.length % 2 === 1 &&
+          props.playerId === props.players.length &&
+          props.players[props.players.length - 1].quizData.selectedCategories
+            .length === 3)
+      );
+    }
+  }, [props.playerId, props.players, quizMode]);
+
+  const disabledDoneBtnCondition = useCallback(() => {
+    if (quizMode === "ON THE EDGE") {
+      return (
+        props.players[setOtherPlayerId(props.playerId, props.players) - 1]
+          .quizData.selectedCategories.length === 0 ||
+        props.players[setOtherPlayerId(props.playerId, props.players) - 1]
+          .quizData.questionsShouldLoad
+      );
+    } else {
+      return props.questionsShouldLoad || !selectedCategories.length;
+    }
+  }, [
+    props.playerId,
+    props.players,
+    props.questionsShouldLoad,
+    quizMode,
+    selectedCategories.length,
+  ]);
 
   const selectRandomCategoriesForUser = useCallback(
     (categoriesNumber: number) => {
@@ -131,18 +198,19 @@ const SelectQuestionsCategory: React.FC<SelectQuestionsCategoryProps> = (
         let arr = [];
 
         while (arr.length < categoriesNumber) {
-          let r = Math.floor(Math.random() * quizConfig.categories.length) + 1;
-          if (arr.indexOf(r) === -1) arr.push(r);
+          let rand =
+            Math.floor(Math.random() * quizConfig.categories.length) + 1;
+          if (arr.indexOf(rand) === -1) arr.push(rand);
         }
 
-        const categoriesObjects = arr.map((el) => {
-          const categoryObject = quizConfig.categories.find(
+        const categories = arr.map((el) => {
+          const category = quizConfig.categories.find(
             (category) => category.id === el
           );
           return {
             id: el,
-            name: categoryObject?.name,
-            color: categoryObject?.color,
+            name: category?.name,
+            color: category?.color,
             questions: [],
           };
         });
@@ -150,10 +218,8 @@ const SelectQuestionsCategory: React.FC<SelectQuestionsCategoryProps> = (
         dispatch({
           type: "set-player-quiz-data",
           payload: {
-            userId:
-              typeof props.playerId !== "undefined" &&
-              setOtherPlayerId(props.playerId, props.players),
-            selectedCategories: categoriesObjects,
+            userId: setOtherPlayerId(props.playerId, props.players),
+            selectedCategories: categories,
             questionsShouldLoad: false,
           },
         });
@@ -165,83 +231,60 @@ const SelectQuestionsCategory: React.FC<SelectQuestionsCategoryProps> = (
   const renderDefaultUserCategoriesView = (
     <Box
       key={props.playerId}
+      className="centered centered-column"
       style={{
-        width: "100%",
         display: displayDefaultCategoriesCheck(
           props.playerId,
           props.players,
           props.questionsShouldLoad
         ),
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
         paddingBottom: "60px",
       }}
     >
-      <Typography variant="h6" gutterBottom mb={2}>
-        {props.playerName}, please select categories
-      </Typography>
-      <Box
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
+      <Title
+        text={`${props.playerName}, please select categories}`}
+        variant="h6"
+        mb={3}
+      />
+      <Box className="centered centered-column">
         <Stack
           direction="row"
           spacing={1}
           mb={2}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
+          className="centered centered-row"
         >
-          <Typography variant="subtitle2">Selected Categories:</Typography>
+          <Title text="Selected Categories:" variant="subtitle2" />
           <Stack direction="row" spacing={1}>
-            {renderSelectedCategories}
+            {renderSelectedCategories(selectedCategories)}
           </Stack>
         </Stack>
-        <Box>
-          <Button
-            onClick={handleResetCategories}
-            disabled={
-              props.questionsShouldLoad || selectedCategories.length === 0
-            }
+        <Box className="centered centered-row">
+          <Btn
+            name="Reset Categories"
+            className="MuiButton-root btn-space"
+            handler={handleResetCategories}
+            disabled={disabledResetBtnCondition()}
             variant="outlined"
             color="error"
-            style={{ margin: "0 10px" }}
-          >
-            Reset Categories
-          </Button>
-          <Button
-            onClick={handleAcceptCategoriesBtn}
-            disabled={
-              props.questionsShouldLoad || selectedCategories.length === 0
-            }
+          />
+          <Btn
+            name="DONE!"
+            handler={handleAcceptCategoriesBtn}
+            disabled={disabledDoneBtnCondition()}
             variant="contained"
             color="success"
-          >
-            DONE!
-          </Button>
+          />
         </Box>
       </Box>
       <Box
-        style={{
-          display:
-            props.players[props.playerId - 1].quiz_data.selectedCategories
-              .length === 3
-              ? "none"
-              : "flex",
-          flexWrap: "wrap",
-          flexDirection: "row",
-          marginTop: 50,
-          justifyContent: "space-evenly",
-        }}
+        className={
+          props.players[props.playerId - 1].quizData.selectedCategories
+            .length === 3
+            ? "hidden"
+            : "categoriesWrapper"
+        }
       >
-        {renderCategoryOptionsButtons}
+        {selectedCategories.length === 3 ? null : renderCategoryOptionsButtons}
       </Box>
     </Box>
   );
@@ -250,180 +293,102 @@ const SelectQuestionsCategory: React.FC<SelectQuestionsCategoryProps> = (
     (playerId, playerName, users) => {
       return (
         <Box
+          key={playerId}
+          className="centered centered-column"
           style={{
-            width: "100%",
-            display: actual_user_id === props.playerId ? "flex" : "none",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
+            display: actualUserId === playerId ? "flex" : "none",
             paddingBottom: "60px",
           }}
         >
-          <Box
-            key={playerId}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h6" gutterBottom mb={2}>
-              {typeof playerId === "number" &&
-                renderInfo(playerId, playerName, users)}
-            </Typography>
-            <Box>
-              <Stack
-                direction="row"
-                spacing={1}
-                mb={2}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Typography variant="subtitle2">Your Categories:</Typography>
-                <Stack direction="row" spacing={1}>
-                  {props.players[playerId - 1].quiz_data.selectedCategories
-                    .length
-                    ? props.players[
-                        playerId - 1
-                      ].quiz_data.selectedCategories.map((category) => (
-                        <Chip
-                          key={category.id}
-                          label={category.name}
-                          variant="outlined"
-                          style={{ border: `1px solid #ccc`, margin: "0 5px" }}
-                        />
-                      ))
-                    : "-"}
-                </Stack>
-              </Stack>
-              <Stack
-                direction="row"
-                spacing={1}
-                mb={2}
-                style={{
-                  display:
-                    props.players.length % 2 === 1 &&
-                    props.playerId === props.players.length
-                      ? "none"
-                      : "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Typography variant="subtitle2">
-                  {`Selected Categories for ${
-                    props.players[
-                      setOtherPlayerId(props.playerId, props.players) - 1
-                    ].name
-                  }:`}
-                </Typography>
-                <Stack direction="row" spacing={1}>
-                  {props.players[
-                    setOtherPlayerId(props.playerId, props.players) - 1
-                  ].quiz_data.selectedCategories.length
-                    ? props.players[
-                        setOtherPlayerId(props.playerId, props.players) - 1
-                      ].quiz_data.selectedCategories.map((category) => (
-                        <Chip
-                          key={category.id}
-                          label={category.name}
-                          variant="outlined"
-                          style={{ border: `1px solid #ccc`, margin: "0 5px" }}
-                        />
-                      ))
-                    : "-"}
-                </Stack>
-              </Stack>
-              <Stack
-                direction="row"
-                spacing={1}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Button
-                  onClick={handleResetCategories}
-                  disabled={
-                    props.players[
-                      setOtherPlayerId(props.playerId, props.players) - 1
-                    ].quiz_data.selectedCategories.length === 0 ||
-                    props.players[
-                      setOtherPlayerId(props.playerId, props.players) - 1
-                    ].quiz_data.questionsShouldLoad ||
-                    (props.players.length % 2 === 1 &&
-                      props.playerId === props.players.length)
-                  }
-                  variant="outlined"
-                  color="error"
-                  style={{ margin: "0 10px" }}
-                >
-                  Reset Cat.
-                </Button>
-                <Button
-                  onClick={selectRandomCategoriesForUser(3)}
-                  disabled={
-                    props.players[
-                      setOtherPlayerId(props.playerId, props.players) - 1
-                    ].quiz_data.questionsShouldLoad ||
-                    (props.players.length % 2 === 1 &&
-                      props.playerId === props.players.length &&
-                      props.players[props.players.length - 1].quiz_data
-                        .selectedCategories.length === 3)
-                  }
-                  variant="contained"
-                  color="primary"
-                  style={{ margin: "0 10px 0 0" }}
-                >
-                  Random Cat.
-                </Button>
-                <Button
-                  onClick={handleAcceptCategoriesBtn}
-                  disabled={
-                    props.players[
-                      setOtherPlayerId(props.playerId, props.players) - 1
-                    ].quiz_data.selectedCategories.length === 0 ||
-                    props.players[
-                      setOtherPlayerId(props.playerId, props.players) - 1
-                    ].quiz_data.questionsShouldLoad
-                  }
-                  variant="contained"
-                  color="success"
-                >
-                  DONE!
-                </Button>
-              </Stack>
-            </Box>
+          <Title
+            text={`${renderInfo(playerId, playerName, users)}`}
+            variant="h6"
+            mb={3}
+          />
+          <Box className="centered centered-column">
             <Stack
               direction="row"
+              spacing={1}
+              mb={2}
+              className="centered centered-row"
+            >
+              <Title text="Your Categories:" variant="subtitle2" />
+              <Stack direction="row" spacing={1}>
+                {renderSelectedCategories(
+                  props.players[playerId - 1].quizData.selectedCategories
+                )}
+              </Stack>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={1}
+              mb={2}
               style={{
                 display:
-                  props.players[
-                    setOtherPlayerId(props.playerId, props.players) - 1
-                  ].quiz_data.selectedCategories.length === 3 ||
-                  (props.players.length % 2 === 1 &&
-                    props.playerId === props.players.length) ||
-                  props.players[
-                    setOtherPlayerId(props.playerId, props.players) - 1
-                  ].quiz_data.questionsShouldLoad
+                  props.players.length % 2 === 1 &&
+                  props.playerId === props.players.length
                     ? "none"
                     : "flex",
-                flexWrap: "wrap",
                 flexDirection: "row",
-                marginTop: 50,
-                justifyContent: "space-evenly",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              {renderCategoryOptionsButtons}
+              <Typography variant="subtitle2">
+                {`Selected Categories for ${
+                  props.players[
+                    setOtherPlayerId(props.playerId, props.players) - 1
+                  ].name
+                }:`}
+              </Typography>
+              <Stack direction="row" spacing={1}>
+                {renderSelectedCategories(
+                  props.players[
+                    setOtherPlayerId(props.playerId, props.players) - 1
+                  ].quizData.selectedCategories
+                )}
+              </Stack>
             </Stack>
+            <Box className="centered centered-row">
+              <Btn
+                name="Reset Categories"
+                handler={handleResetCategories}
+                disabled={disabledResetBtnCondition()}
+                variant="outlined"
+                color="error"
+              />
+              <Btn
+                name="Random Cat."
+                className="MuiButton-root btn-space"
+                handler={selectRandomCategoriesForUser(3)}
+                disabled={disabledRandomCatBtnCondition()}
+                variant="contained"
+                color="primary"
+              />
+              <Btn
+                name="DONE!"
+                handler={handleAcceptCategoriesBtn}
+                disabled={disabledDoneBtnCondition()}
+                variant="contained"
+                color="success"
+              />
+            </Box>
+          </Box>
+          <Box
+            className={
+              props.players[setOtherPlayerId(props.playerId, props.players) - 1]
+                .quizData.selectedCategories.length === 3 ||
+              (props.players.length % 2 === 1 &&
+                props.playerId === props.players.length) ||
+              props.players[setOtherPlayerId(props.playerId, props.players) - 1]
+                .quizData.questionsShouldLoad
+                ? "hidden"
+                : "categoriesWrapper"
+            }
+          >
+            {selectedCategories.length === 3
+              ? null
+              : renderCategoryOptionsButtons}
           </Box>
         </Box>
       );
@@ -434,14 +399,18 @@ const SelectQuestionsCategory: React.FC<SelectQuestionsCategoryProps> = (
       selectRandomCategoriesForUser,
       props.players,
       props.playerId,
-      actual_user_id,
+      actualUserId,
+      selectedCategories,
       handleResetCategories,
+      disabledResetBtnCondition,
+      disabledRandomCatBtnCondition,
+      disabledDoneBtnCondition,
     ]
   );
 
   return (
     <Box>
-      {quiz_mode === "MY THING" || quiz_mode === "MY THING VS. MY THING"
+      {quizMode === "MY THING" || quizMode === "MY THING VS. MY THING"
         ? renderDefaultUserCategoriesView
         : renderCustomUserCategoriesView(
             props.playerId,

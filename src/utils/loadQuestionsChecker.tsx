@@ -1,4 +1,4 @@
-import { User } from "../ts/types/app_types";
+import { User } from "../ts/types/appTypes";
 
-export const loadQuestionsChecker = (users: User[]) =>
-  users.every((user) => user.quiz_data.questionsShouldLoad === true);
+export const questionsCanLoad = (users: User[]) =>
+  users.every((user) => user.quizData.questionsShouldLoad === true);

@@ -1,4 +1,4 @@
-import { Category, Question, User } from "../../ts/types/app_types";
+import { Category, Question, User } from "../../ts/types/appTypes";
 import { ActionType } from "../action-types/index";
 
 interface ResetStoreAction {
@@ -15,12 +15,12 @@ interface SetMultiPlayerModeAction {
 
 interface SetNumberOfPlayersAction {
   type: ActionType.SELECT_NUMBER_OF_PLAYERS;
-  payload: { number_of_players: number };
+  payload: { numOfPlayers: number };
 }
 
 interface SetIsFormValidAction {
   type: ActionType.SET_IS_FORM_VALID;
-  payload: { is_form_valid: boolean };
+  payload: { isFormValid: boolean };
 }
 
 interface AddUserNameAction {
@@ -29,11 +29,11 @@ interface AddUserNameAction {
     id: number;
     name: string;
     score: number;
-    correct_answers: number;
-    incorrect_answers: number;
-    total_answers: number;
-    is_winner: boolean;
-    quiz_data: {
+    correctAnswers: number;
+    incorrectAnswers: number;
+    totalAnswers: number;
+    isWinner: boolean;
+    quizData: {
       questionsShouldLoad: boolean;
       selectedCategories: [];
       allQuestions: [];
@@ -48,12 +48,7 @@ interface ClearUsersArrayAction {
 
 interface SetQuizModeAction {
   type: ActionType.SET_QUIZ_MODE;
-  payload: { quiz_mode: string };
-}
-
-interface SetIsQuizModeSetAction {
-  type: ActionType.SET_IS_QUIZ_MODE_SET;
-  payload: { quiz_mode_is_set: boolean };
+  payload: { quizMode: string; isQuizModeSet: boolean };
 }
 
 interface SetPlayerQuizDataAction {
@@ -108,7 +103,6 @@ export type Action =
   | AddUserNameAction
   | ClearUsersArrayAction
   | SetQuizModeAction
-  | SetIsQuizModeSetAction
   | SetPlayerQuizDataAction
   | SetQuestionsShouldLoad
   | SetQuestionsForEachUser

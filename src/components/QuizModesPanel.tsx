@@ -4,20 +4,19 @@ import { RootState } from "../state/reducers";
 import { quizConfig } from "../quizConfig/quizConfig";
 import QuizMode from "./QuizMode";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import "../styles/quizModes.css";
+import Title from "./common/Title/Title";
 
 const QuizModesPanel = () => {
   const [isSinglePlayerMode, setIsSinglePlayerMode] = useState(false);
-  const { players_mode, quiz_mode_is_set } = useSelector(
+  const { playersMode, isQuizModeSet } = useSelector(
     (state: RootState) => state.quiz
   );
 
   useEffect(() => {
-    players_mode === "single_player"
+    playersMode === "Single Player"
       ? setIsSinglePlayerMode(true)
       : setIsSinglePlayerMode(false);
-  }, [isSinglePlayerMode, players_mode]);
+  }, [isSinglePlayerMode, playersMode]);
 
   const renderModes = quizConfig.quizModes
     .filter((quizMode) =>
@@ -37,19 +36,11 @@ const QuizModesPanel = () => {
     });
 
   return (
-    <Box
-      style={{
-        display: `${quiz_mode_is_set ? "none" : "flex"}`,
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: "50px",
-      }}
-    >
-      <Typography variant="h4" gutterBottom mb={4}>
-        Select Quiz Mode
-      </Typography>
-      <Box className="quizModes__wrapper">{renderModes}</Box>
+    <Box className={`${isQuizModeSet ? "hidden" : "centered centered-column"}`}>
+      <Title text="Select Quiz Mode" variant="h6" mt={4} mb={2} />
+      <Box className="centered centered-row" flexWrap="wrap">
+        {renderModes}
+      </Box>
     </Box>
   );
 };

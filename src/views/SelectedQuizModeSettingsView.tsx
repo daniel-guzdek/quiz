@@ -1,45 +1,42 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Typography from "@mui/material/Typography";
 import SelectQuestionsCategory from "../components/SelectQuestionsCategory";
 import { RootState } from "../state/reducers";
-import { User } from "../ts/types/app_types";
-import { loadQuestionsChecker } from "../utils/loadQuestionsChecker";
+import { User } from "../ts/types/appTypes";
+import { questionsCanLoad } from "../utils/loadQuestionsChecker";
 import Box from "@mui/material/Box";
+import Title from "../components/common/Title/Title";
 
 const SelectedQuizModeSettingsView: React.FC = () => {
-  const quiz_mode = useSelector(
-    (state: RootState): string => state.quiz["quiz_mode"]
+  const quizMode = useSelector(
+    (state: RootState): string => state.quiz["quizMode"]
   );
   const users = useSelector((state: RootState): User[] => state.quiz["users"]);
 
   const renderSelectQuestionsForEachUser =
     users?.length &&
-    users.map((user) => {
+    users.map((user, index) => {
       return (
         <SelectQuestionsCategory
           key={user.id}
           playerId={user.id}
           playerName={user.name}
           players={users}
-          questionsShouldLoad={users[user.id - 1].quiz_data.questionsShouldLoad}
+          questionsShouldLoad={users[index].quizData.questionsShouldLoad}
         />
       );
     });
 
+  console.log("BAM");
+
   return (
     <Box
-      style={{
-        display: loadQuestionsChecker(users) ? "none" : "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: "40px",
-      }}
+      className={`${
+        questionsCanLoad(users) ? "hidden" : "centered centered-column"
+      }`}
+      marginTop={"40px"}
     >
-      <Typography variant="h4" gutterBottom>
-        {quiz_mode}
-      </Typography>
+      <Title text={quizMode} variant="h4" gutterBottom />
       <Box>{renderSelectQuestionsForEachUser}</Box>
     </Box>
   );

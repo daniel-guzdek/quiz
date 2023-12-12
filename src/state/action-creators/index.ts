@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Category, Question, User } from "../../ts/types/app_types";
+import { Category, Question, User } from "../../ts/types/appTypes";
 import { ActionType } from "../action-types";
 import { Action } from "../actions/index";
 
@@ -11,27 +11,29 @@ export const resetStore = () => {
   };
 };
 
-export const setSinglePlayerMode = () => {
+export const setSinglePlayerMode = (numOfPlayers: number) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SET_SINGLE_PLAYER_MODE,
+      payload: { numOfPlayers },
     });
   };
 };
 
-export const setMultiPlayerMode = () => {
+export const setMultiPlayerMode = (numOfPlayers: number) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SET_MULTI_PLAYER_MODE,
+      payload: { numOfPlayers },
     });
   };
 };
 
-export const setNumberOfPlayers = (number_of_players: number) => {
+export const setNumberOfPlayers = (numOfPlayers: number) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SELECT_NUMBER_OF_PLAYERS,
-      payload: { number_of_players: number_of_players },
+      payload: { numOfPlayers },
     });
   };
 };
@@ -44,11 +46,11 @@ export const addUserName = (id: number, name: string) => {
         id: id,
         name: name,
         score: 0,
-        correct_answers: 0,
-        incorrect_answers: 0,
-        total_answers: 0,
-        is_winner: false,
-        quiz_data: {
+        correctAnswers: 0,
+        incorrectAnswers: 0,
+        totalAnswers: 0,
+        isWinner: false,
+        quizData: {
           questionsShouldLoad: false,
           selectedCategories: [],
           allQuestions: [],
@@ -67,29 +69,20 @@ export const clearUserArray = () => {
   };
 };
 
-export const setIsFormValid = (is_form_valid: boolean) => {
+export const setIsFormValid = (isFormValid: boolean) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SET_IS_FORM_VALID,
-      payload: { is_form_valid },
+      payload: { isFormValid },
     });
   };
 };
 
-export const setQuizMode = (quiz_mode: string) => {
+export const setQuizMode = (quizMode: string) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SET_QUIZ_MODE,
-      payload: { quiz_mode },
-    });
-  };
-};
-
-export const setIsQuizModeSet = (quiz_mode_is_set: boolean) => {
-  return (dispatch: Dispatch<Action>) => {
-    dispatch({
-      type: ActionType.SET_IS_QUIZ_MODE_SET,
-      payload: { quiz_mode_is_set },
+      payload: { quizMode, isQuizModeSet: true },
     });
   };
 };

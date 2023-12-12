@@ -1,0 +1,64 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif !important;
+  color: rgb(82, 82, 82);
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &-box {
+    height: 100vh;
+    flex-direction: column;
+  }
+  &-column {
+    flex-direction: column;
+  }
+  &-row {
+    flex-direction: row;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.fullHeight {
+  height: 100%;
+}
+
+.subtitle {
+  padding-top: 25px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.btn-done {
+  flex-basis: 90px;
+  height: 4em;
+}
+
+.MuiButton-root.btn-space {
+  margin: 0 10px;
+}
+
+form {
+  padding-top: 20px;
+}
+
+.quizModeCard {
+  width: 300px;
+  height: 220px;
+  margin: 10px;
+}
+
+.categoriesWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 50px;
+}

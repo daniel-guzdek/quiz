@@ -1,4 +1,4 @@
-import { User } from "./../ts/types/app_types";
+import { User } from "../ts/types/appTypes";
 
 export const displayDefaultCategoriesCheck = (
   playerId: number,
@@ -9,9 +9,9 @@ export const displayDefaultCategoriesCheck = (
     return "flex";
   } else if (questionsShouldLoad) {
     return "none";
-  } else if (players[playerId - 2].quiz_data.questionsShouldLoad) {
+  } else if (players[playerId - 2].quizData.questionsShouldLoad) {
     return "flex";
-  } else if (!players[playerId - 2].quiz_data.questionsShouldLoad) {
+  } else if (!players[playerId - 2].quizData.questionsShouldLoad) {
     return "none";
   }
 };

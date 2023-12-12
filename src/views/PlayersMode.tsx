@@ -1,43 +1,38 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import { ImUser, ImUsers } from "react-icons/im";
 import Stack from "@mui/material/Stack";
+import Btn from "../components/common/Buttons/Button";
+import Title from "../components/common/Title/Title";
+import "../styles/app.less";
 
 const PlayersMode: React.FC = () => {
   const dispatch = useDispatch();
 
+  const handleDispatchPlayersMode = (playersModeTypeName: string) => {
+    dispatch({ type: playersModeTypeName });
+  };
+
   return (
-    <React.Fragment>
-      <Typography variant="h4" gutterBottom mt={6} mb={3} textAlign="center">
-        Select Players mode
-      </Typography>
-      <Stack direction="row" spacing={3}>
-        <Button
-          onClick={() => dispatch({ type: "set-single-player-mode" })}
+    <>
+      <Title text="Select Players mode" variant="h6" mt={4} mb={2} />
+      <Stack direction="row" spacing={3} mb={2}>
+        <Btn
+          name="Single Player"
           variant="outlined"
           color="success"
           endIcon={<ImUser />}
-        >
-          Single Player
-        </Button>
-        <Button
-          onClick={() => {
-            dispatch({ type: "set-multi-player-mode" });
-            dispatch({
-              type: "select-number-of-players",
-              payload: 2,
-            });
-          }}
+          handler={() => handleDispatchPlayersMode("set-single-player-mode")}
+        />
+        <Btn
+          name="Multi Player"
           variant="outlined"
           color="primary"
           endIcon={<ImUsers />}
-        >
-          Multi Player
-        </Button>
+          handler={() => handleDispatchPlayersMode("set-multi-player-mode")}
+        />
       </Stack>
-    </React.Fragment>
+    </>
   );
 };
 

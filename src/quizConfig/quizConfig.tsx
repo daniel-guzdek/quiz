@@ -1,4 +1,4 @@
-import { Category } from "../ts/enums/app_enums";
+import { Category } from "../ts/enums/appEnums";
 import { GiHorseHead, GiAxeSword, GiBookmark } from "react-icons/gi";
 
 export const quizConfig = {
@@ -30,7 +30,7 @@ export const quizConfig = {
       icon: <GiBookmark />,
       isSinglePlayerMode: true,
       isMultiPlayerMode: true,
-      description: "Questions from all avaible subjects",
+      description: "Questions from all available subjects and topics",
     },
     {
       id: 4,

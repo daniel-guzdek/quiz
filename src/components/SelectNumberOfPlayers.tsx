@@ -7,7 +7,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const SelectNumberOfPlayers = () => {
-  const { number_of_players } = useSelector((state: RootState) => state.quiz);
+  const { numOfPlayers } = useSelector((state: RootState) => state.quiz);
   const dispatch = useDispatch();
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -33,13 +33,11 @@ const SelectNumberOfPlayers = () => {
       }}
     >
       <FormControl sx={{ m: 1, minWidth: 135 }}>
-        <InputLabel id="demo-simple-select-helper-label">
-          Number of Players
-        </InputLabel>
+        <InputLabel id="select-helper-label">Number of Players</InputLabel>
         <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={number_of_players}
+          labelId="select-helper-label"
+          id="select-helper"
+          value={numOfPlayers}
           label="Number of Players"
           onChange={handleChange}
         >

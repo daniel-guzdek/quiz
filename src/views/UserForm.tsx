@@ -1,15 +1,16 @@
 import React, { useRef } from "react";
 import { RootState } from "../state/reducers";
 import { useDispatch, useSelector } from "react-redux";
-import Typography from "@mui/material/Typography";
 import SelectNumberOfPlayers from "../components/SelectNumberOfPlayers";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import Title from "../components/common/Title/Title";
+import Btn from "../components/common/Buttons/Button";
 import { ImUsers } from "react-icons/im";
-import Button from "@mui/material/Button";
+import "../styles/app.less";
 
 const UserForm: React.FC = () => {
-  const { players_mode, number_of_players, is_form_valid } = useSelector(
+  const { playersMode, numOfPlayers, isFormValid } = useSelector(
     (state: RootState) => state.quiz
   );
 
@@ -61,22 +62,21 @@ const UserForm: React.FC = () => {
       payload: [],
     });
 
-    const dispatchUsers = (number_of_players: number) => {
-      for (let i = 0; i < number_of_players; i++) {
+    const dispatchUsers = (numOfPlayers: number) => {
+      for (let i = 0; i < numOfPlayers; i++) {
         dispatch({
           type: "add-user-name",
           payload: {
             id: i + 1,
-            name:
-              inputs[i].ref?.current!.value === ""
-                ? `Player ${i + 1}`
-                : inputs[i].ref?.current!.value,
+            name: inputs[i].ref?.current!.value
+              ? inputs[i].ref?.current!.value
+              : `Player ${i + 1}`,
             score: 0,
-            correct_answers: 0,
-            incorrect_answers: 0,
-            total_answers: 0,
-            is_winner: false,
-            quiz_data: {
+            correctAnswers: 0,
+            incorrectAnswers: 0,
+            totalAnswers: 0,
+            isWinner: false,
+            quizData: {
               questionsShouldLoad: false,
               selectedCategories: [],
               allQuestions: [],
@@ -86,7 +86,7 @@ const UserForm: React.FC = () => {
       }
     };
 
-    dispatchUsers(number_of_players);
+    dispatchUsers(numOfPlayers);
   };
 
   const displayGameModesPanel = () => {
@@ -111,7 +111,7 @@ const UserForm: React.FC = () => {
         />
       );
     })
-    .slice(0, number_of_players);
+    .slice(0, numOfPlayers);
 
   const renderForm = (
     <Box
@@ -122,78 +122,40 @@ const UserForm: React.FC = () => {
       noValidate
       autoComplete="off"
       onSubmit={userFormHandler}
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        flexWrap: "wrap",
-      }}
+      className="centered centered-row"
+      flexWrap="wrap"
     >
       {renderNameInputs}
-      <Button
+      <Btn
         type="submit"
-        onClick={() => displayGameModesPanel()}
+        name="Done"
         variant="contained"
         color="success"
-        style={{ width: "110px", height: "4em" }}
-      >
-        Done
-      </Button>
+        handler={displayGameModesPanel}
+        className="btn-done"
+      />
     </Box>
   );
 
   return (
-    <Box
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: "50px",
-      }}
-    >
-      <Typography variant="h4" gutterBottom mb={4}>
-        Select number of Players
-      </Typography>
-      <Typography variant="subtitle2" gutterBottom mb={4}>
-        players mode:{" "}
-        {players_mode === ""
-          ? "?"
-          : players_mode === "single_player"
-          ? "SINGLE PLAYER"
-          : "MULTI PLAYER"}
-      </Typography>
-      {players_mode === "single_player" ? (
-        <Box
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Button
-            onClick={() => {
-              dispatch({ type: "set-multi-player-mode" });
-              dispatch({
-                type: "select-number-of-players",
-                payload: 2,
-              });
-            }}
+    <Box className="centered centered-column">
+      <Title text="Select number of Players" variant="h6" mt={4} mb={2} />
+      <Title text={`mode: ${playersMode}`} variant="subtitle2" mb={2} />
+      {playersMode === "Single Player" ? (
+        <Box className="centered centered-column">
+          <Btn
+            name="Multi Player"
             variant="outlined"
             color="primary"
             endIcon={<ImUsers />}
-            style={{ marginBottom: "30px" }}
-          >
-            Multi Player
-          </Button>
+            handler={() => dispatch({ type: "set-multi-player-mode" })}
+          />
           <Box>{renderForm}</Box>
         </Box>
       ) : (
         <div>
-          {!is_form_valid && <SelectNumberOfPlayers />}
-          {!number_of_players ? null : renderForm}
+          {isFormValid ? null : <SelectNumberOfPlayers />}
+          {numOfPlayers ? renderForm : null}
         </div>
       )}
     </Box>

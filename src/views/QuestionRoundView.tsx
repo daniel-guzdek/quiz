@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Question from "../components/Question";
 import { RootState } from "../state/reducers";
-import { User } from "../ts/types/app_types";
+import { User } from "../ts/types/appTypes";
 
 const QuestionRoundView = () => {
   const [urls, setUrls] = useState();
@@ -14,8 +14,8 @@ const QuestionRoundView = () => {
 
   const dispatch = useDispatch();
 
-  const quiz_mode = useSelector(
-    (state: RootState): string => state.quiz["quiz_mode"]
+  const quizMode = useSelector(
+    (state: RootState): string => state.quiz["quizMode"]
   );
   const users = useSelector((state: RootState): User[] => state.quiz["users"]);
 
@@ -26,7 +26,7 @@ const QuestionRoundView = () => {
   useEffect(() => {
     if (!isLoading) {
       const users = localUsers.map((localUser, index) => {
-        localUser.quiz_data.allQuestions = allQuestions;
+        localUser.quizData.allQuestions = allQuestions;
         return localUser;
       });
       setLocalUsers(users);
@@ -38,7 +38,7 @@ const QuestionRoundView = () => {
     const fetchQuestions = () => {
       console.log("Loading questions...");
       setIsLoading(true);
-      if (quiz_mode === "OMNIBUS") {
+      if (quizMode === "OMNIBUS") {
         axios
           .get("https://opentdb.com/api.php?amount=15&type=multiple")
           .then((response) => {
@@ -52,11 +52,11 @@ const QuestionRoundView = () => {
     };
 
     fetchQuestions();
-  }, [allQuestions, quiz_mode]);
+  }, [allQuestions, quizMode]);
 
   return (
     <div>
-      <div>{quiz_mode}</div>
+      <div>{quizMode}</div>
       <p>Question round view</p>
       <main>{isLoading ? "...loading" : <Question />}</main>
       <span>{isError ? "Sorry, we couldn't fetch any data" : null}</span>

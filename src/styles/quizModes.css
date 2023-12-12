@@ -1,8 +1,0 @@
-.quizModes__wrapper {
-  display: flex;
-  justify-content: space-around;
-}
-
-.quizModes__wrapper--hidden {
-  display: none;
-}

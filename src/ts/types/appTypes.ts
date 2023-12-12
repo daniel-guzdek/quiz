@@ -2,11 +2,11 @@ export type User = {
   id: number;
   name: string;
   score: number;
-  correct_answers: number;
-  incorrect_answers: number;
-  total_answers: number;
-  is_winner: boolean;
-  quiz_data: {
+  correctAnswers: number;
+  incorrectAnswers: number;
+  totalAnswers: number;
+  isWinner: boolean;
+  quizData: {
     questionsShouldLoad: boolean;
     selectedCategories: Category[];
     allQuestions: Question[] | [];
@@ -15,9 +15,9 @@ export type User = {
 
 export type Question = {
   category: string;
-  correct_answer: string;
+  correctAnswer: string;
   difficulty: string;
-  incorrect_answers: string[];
+  incorrectAnswers: string[];
   question: string;
   type: string;
 };

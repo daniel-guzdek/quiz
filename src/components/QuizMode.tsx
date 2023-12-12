@@ -1,17 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/reducers";
-import { User } from "../ts/types/app_types";
+import { User } from "../ts/types/appTypes";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import "../styles/quizMode.css";
+import Title from "./common/Title/Title";
+import "../styles/app.less";
 
-const QuizMode = (props: {
+interface IQuizModeProps {
   variant: string;
   icon: any;
   description: string;
-}) => {
+}
+
+const QuizMode = ({ variant, icon, description }: IQuizModeProps) => {
   const dispatch = useDispatch();
 
   const users = useSelector((state: RootState): User[] => state.quiz["users"]);
@@ -19,47 +22,39 @@ const QuizMode = (props: {
   const modeHandler = () => {
     dispatch({
       type: "set-quiz-mode",
-      payload: props.variant,
+      payload: {
+        quizMode: variant,
+        isQuizModeSet: true,
+      },
     });
 
-    dispatch({
-      type: "set-is-quiz-mode-set",
-      payload: true,
-    });
-
-    if (props.variant === "OMNIBUS") {
-      users.map((user, index) => {
-        return dispatch({
+    variant === "OMNIBUS" &&
+      users.map((user) =>
+        dispatch({
           type: "questions-should-load",
           payload: {
-            userId: index + 1,
+            userId: user.id,
             questionsShouldLoad: true,
           },
-        });
-      });
-    }
+        })
+      );
   };
 
   return (
-    <Card onClick={() => modeHandler()} sx={{ width: 300, margin: "10px" }}>
-      <CardActionArea>
-        <CardContent
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography gutterBottom variant="h2" component="div" mt={2} mb={0}>
-            {props.icon}
+    <Card onClick={() => modeHandler()} className="quizModeCard">
+      <CardActionArea style={{ height: "100%" }}>
+        <CardContent className="centered centered-column">
+          <Typography variant="h2" component="div" mt={2} mb={0}>
+            {icon}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div" mt={1}>
-            {props.variant}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {props.description}
-          </Typography>
+          <Title
+            text={variant}
+            gutterBottom
+            variant="h6"
+            component="div"
+            mt={1}
+          />
+          <Title text={description} variant="body2" color="text.secondary" />
         </CardContent>
       </CardActionArea>
     </Card>

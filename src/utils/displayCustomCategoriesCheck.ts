@@ -1,4 +1,4 @@
-import { User } from "./../ts/types/app_types";
+import { User } from "../ts/types/appTypes";
 import { setOtherPlayerId } from "./setOtherPlayerId";
 
 export const displayCustomCategoriesCheck = (

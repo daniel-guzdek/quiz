@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Difficulty } from "../ts/enums/app_enums";
-import { QuestionsState } from "../ts/types/app_types";
+import { Difficulty } from "../ts/enums/appEnums";
+import { QuestionsState } from "../ts/types/appTypes";
 
 export const useFetch = ({ url }: any) => {
   const [response, setResponse] = useState({});

@@ -1,4 +1,4 @@
-import { User } from "../ts/types/app_types";
+import { User } from "../ts/types/appTypes";
 
 export const setOtherPlayerId = (playerId: number, users: User[]): number => {
   switch (true) {

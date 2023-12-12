@@ -1,16 +1,16 @@
-import { InitialState } from "./../../ts/interfaces/app_interfaces";
+import { InitialState } from "../../ts/interfaces/appInterfaces";
 import { ActionType } from "../action-types/index";
 import { Action } from "../actions";
 
 const initialState = {
-  quiz_mode: "",
-  quiz_mode_is_set: false,
-  players_mode: "",
-  players_mode_is_set: false,
-  is_form_valid: false,
-  number_of_players: 0,
-  number_of_questions: 10,
-  actual_user_id: 1,
+  quizMode: "",
+  isQuizModeSet: false,
+  playersMode: "",
+  isPlayersModeSet: false,
+  isFormValid: false,
+  numOfPlayers: 0,
+  numOfQuestions: 10,
+  actualUserId: 1,
   users: [],
 };
 
@@ -18,43 +18,44 @@ const reducer = (state: InitialState = initialState, action: Action) => {
   switch (action.type) {
     case ActionType.RESET_STORE:
       return {
-        quiz_mode: "",
-        quiz_mode_is_set: false,
-        players_mode: "",
-        players_mode_is_set: false,
-        is_form_valid: false,
-        number_of_players: 0,
-        number_of_questions: 10,
-        actual_user_id: 1,
+        quizMode: "",
+        isQuizModeSet: false,
+        playersMode: "",
+        isPlayersModeSet: false,
+        isFormValid: false,
+        numOfPlayers: 0,
+        numOfQuestions: 10,
+        actualUserId: 1,
         users: [],
       };
     case ActionType.SET_SINGLE_PLAYER_MODE:
       return {
         ...state,
-        players_mode: "single_player",
-        players_mode_is_set: true,
-        number_of_players: 1,
+        playersMode: "Single Player",
+        isPlayersModeSet: true,
+        numOfPlayers: 1,
       };
     case ActionType.SET_MULTI_PLAYER_MODE:
       return {
         ...state,
-        players_mode: "multi_player",
-        players_mode_is_set: true,
+        playersMode: "Multi Player",
+        isPlayersModeSet: true,
+        numOfPlayers: 2,
       };
     case ActionType.SELECT_NUMBER_OF_PLAYERS:
       if (!action.payload) {
         return {
           ...state,
-          players_mode: "",
-          players_mode_is_set: false,
-          number_of_players: action.payload,
+          playersMode: "",
+          isPlayersModeSet: false,
+          numOfPlayers: action.payload,
         };
       } else {
         return {
           ...state,
-          players_mode: "multi_player",
-          players_mode_is_set: true,
-          number_of_players: action.payload,
+          playersMode: "Multi Player",
+          isPlayersModeSet: true,
+          numOfPlayers: action.payload,
         };
       }
     case ActionType.ADD_USER_NAME:
@@ -65,7 +66,7 @@ const reducer = (state: InitialState = initialState, action: Action) => {
     case ActionType.SET_IS_FORM_VALID:
       return {
         ...state,
-        is_form_valid: action.payload,
+        isFormValid: action.payload,
       };
     case ActionType.CLEAR_USERS_ARRAY:
       return {
@@ -75,23 +76,23 @@ const reducer = (state: InitialState = initialState, action: Action) => {
     case ActionType.SET_QUIZ_MODE:
       return {
         ...state,
-        quiz_mode: action.payload,
+        quizMode: action.payload.quizMode,
+        isQuizModeSet: action.payload.isQuizModeSet,
       };
-    case ActionType.SET_IS_QUIZ_MODE_SET:
-      return {
-        ...state,
-        quiz_mode_is_set: action.payload,
-      };
+    // case ActionType.SET_IS_QUIZ_MODE_SET:
+    //   return {
+    //     ...state,
+    //     isQuizModeSet: action.payload,
+    //   };
     case ActionType.SET_PLAYER_QUIZ_DATA:
       return {
         ...state,
         users: [
           ...state.users,
-          (state.users[action.payload.userId - 1].quiz_data.selectedCategories =
+          (state.users[action.payload.userId - 1].quizData.selectedCategories =
             action.payload.selectedCategories),
-          (state.users[
-            action.payload.userId - 1
-          ].quiz_data.questionsShouldLoad = action.payload.questionsShouldLoad),
+          (state.users[action.payload.userId - 1].quizData.questionsShouldLoad =
+            action.payload.questionsShouldLoad),
         ].splice(0, state.users.length),
       };
     case ActionType.SET_QUESTIONS_SHOULD_LOAD:
@@ -99,9 +100,8 @@ const reducer = (state: InitialState = initialState, action: Action) => {
         ...state,
         users: [
           ...state.users,
-          (state.users[
-            action.payload.userId - 1
-          ].quiz_data.questionsShouldLoad = action.payload.questionsShouldLoad),
+          (state.users[action.payload.userId - 1].quizData.questionsShouldLoad =
+            action.payload.questionsShouldLoad),
         ].splice(0, state.users.length),
       };
     case ActionType.SET_QUESTIONS_FOR_EACH_USER:
@@ -109,7 +109,7 @@ const reducer = (state: InitialState = initialState, action: Action) => {
         ...state,
         users: [
           ...state.users,
-          (state.users[action.payload.userId - 1].quiz_data.allQuestions =
+          (state.users[action.payload.userId - 1].quizData.allQuestions =
             action.payload.allQuestions),
         ].splice(0, state.users.length),
       };
@@ -118,14 +118,14 @@ const reducer = (state: InitialState = initialState, action: Action) => {
         ...state,
         users: [
           ...state.users,
-          (state.users[action.payload.userId - 1].quiz_data.selectedCategories =
+          (state.users[action.payload.userId - 1].quizData.selectedCategories =
             []),
         ].splice(0, state.users.length),
       };
     case ActionType.SET_ACTUAL_USER_ID:
       return {
         ...state,
-        actual_user_id: action.payload,
+        actualUserId: action.payload,
       };
     case ActionType.COUNT_SCORE:
       return {
