@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import SelectQuestionsCategory from "../components/SelectQuestionsCategory";
+import QuestionsCategories from "../components/Categories/components/QuestionsCategories";
 import { RootState } from "../state/reducers";
 import { User } from "../ts/types/appTypes";
 import { questionsCanLoad } from "../utils/loadQuestionsChecker";
@@ -17,7 +17,7 @@ const SelectedQuizModeSettingsView: React.FC = () => {
     users?.length &&
     users.map((user, index) => {
       return (
-        <SelectQuestionsCategory
+        <QuestionsCategories
           key={user.id}
           playerId={user.id}
           playerName={user.name}
@@ -26,8 +26,6 @@ const SelectedQuizModeSettingsView: React.FC = () => {
         />
       );
     });
-
-  console.log("BAM");
 
   return (
     <Box

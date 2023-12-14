@@ -1,27 +1,16 @@
-import { useEffect, useState, SetStateAction } from "react";
-import { RootState } from "../state/reducers";
+import { useEffect, useState } from "react";
+import { RootState } from "../../../state/reducers";
 import { useDispatch, useSelector } from "react-redux";
-import { Category, SelectedCategories } from "../ts/types/appTypes";
-import { setOtherPlayerId } from "../utils/setOtherPlayerId";
+import { SelectedCategories } from "../../../ts/types/appTypes";
+import { setCustomUserId } from "../../../utils/setCustomUserId";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Title from "./common/Title/Title";
-import "../styles/app.less";
+import Title from "../../common/Title/Title";
+import { ICategoryBtnProps } from "../models/ICategoryBtnProps";
+import "../../../styles/app.less";
+import { mode } from "../../../constants/constants";
 
-type CatOptionBtnProps = {
-  categoryId: number;
-  categoryName: string;
-  categoryIcon: string;
-  bgColor: string;
-  urlValue: number;
-  selectedUserId: number;
-  selectedUserName: string;
-  setSelectedCategories: React.Dispatch<SetStateAction<Category[]>>;
-  selectedCategories: Category[];
-  disabled: boolean;
-};
-
-const CategoryOptionButton = (props: CatOptionBtnProps) => {
+const CategoryBtn = (props: ICategoryBtnProps) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const { quizMode, users } = useSelector((state: RootState) => state.quiz);
@@ -35,12 +24,11 @@ const CategoryOptionButton = (props: CatOptionBtnProps) => {
     id: props.categoryId,
     name: props.categoryName,
     color: props.bgColor,
-    urlValue: props.urlValue,
     questions: [],
   };
 
   const handleCategoryBtn = () => {
-    if (quizMode === "ON THE EDGE") {
+    if (quizMode === mode.ON_THE_EDGE) {
       props.setSelectedCategories((selectedCategories: SelectedCategories) => [
         ...selectedCategories,
         categoryObj,
@@ -50,7 +38,7 @@ const CategoryOptionButton = (props: CatOptionBtnProps) => {
         payload: {
           userId:
             props.selectedUserId &&
-            setOtherPlayerId(props.selectedUserId, users),
+            setCustomUserId(props.selectedUserId, users),
           selectedCategories: [...props.selectedCategories, categoryObj],
           questionsShouldLoad: false,
         },
@@ -84,4 +72,4 @@ const CategoryOptionButton = (props: CatOptionBtnProps) => {
   );
 };
 
-export default CategoryOptionButton;
+export default CategoryBtn;
