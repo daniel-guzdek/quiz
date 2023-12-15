@@ -8,15 +8,15 @@ import Title from "./common/Title/Title";
 
 const QuizModesPanel = () => {
   const [isSinglePlayerMode, setIsSinglePlayerMode] = useState(false);
-  const { playersMode, isQuizModeSet } = useSelector(
+  const { usersMode, isQuizModeSet } = useSelector(
     (state: RootState) => state.quiz
   );
 
   useEffect(() => {
-    playersMode === "Single Player"
+    usersMode === "Single Player"
       ? setIsSinglePlayerMode(true)
       : setIsSinglePlayerMode(false);
-  }, [isSinglePlayerMode, playersMode]);
+  }, [isSinglePlayerMode, usersMode]);
 
   const renderModes = quizConfig.quizModes
     .filter((quizMode) =>

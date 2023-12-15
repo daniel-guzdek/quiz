@@ -6,34 +6,34 @@ import Btn from "../components/common/Buttons/Button";
 import Title from "../components/common/Title/Title";
 import "../styles/app.less";
 
-const PlayersMode: React.FC = () => {
+const UsersMode: React.FC = () => {
   const dispatch = useDispatch();
 
-  const handleDispatchPlayersMode = (playersModeTypeName: string) => {
-    dispatch({ type: playersModeTypeName });
+  const handleDispatchUsersMode = (usersModeTypeName: string) => {
+    dispatch({ type: usersModeTypeName });
   };
 
   return (
     <>
-      <Title text="Select Players mode" variant="h6" mt={4} mb={2} />
+      <Title text="Select Users' mode" variant="h6" mt={4} mb={2} />
       <Stack direction="row" spacing={3} mb={2}>
         <Btn
           name="Single Player"
           variant="outlined"
           color="success"
           endIcon={<ImUser />}
-          handler={() => handleDispatchPlayersMode("set-single-player-mode")}
+          handler={() => handleDispatchUsersMode("set-single-player-mode")}
         />
         <Btn
           name="Multi Player"
           variant="outlined"
           color="primary"
           endIcon={<ImUsers />}
-          handler={() => handleDispatchPlayersMode("set-multi-player-mode")}
+          handler={() => handleDispatchUsersMode("set-multi-player-mode")}
         />
       </Stack>
     </>
   );
 };
 
-export default PlayersMode;
+export default UsersMode;

@@ -1,13 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import QuestionsCategories from "../components/Categories/components/QuestionsCategories";
+import QuestionsCatg from "../components/Categories/components/QuestionsCatg";
 import { RootState } from "../state/reducers";
 import { User } from "../ts/types/appTypes";
 import { questionsCanLoad } from "../utils/loadQuestionsChecker";
 import Box from "@mui/material/Box";
 import Title from "../components/common/Title/Title";
 
-const SelectedQuizModeSettingsView: React.FC = () => {
+const QuizModeSettingsView: React.FC = () => {
   const quizMode = useSelector(
     (state: RootState): string => state.quiz["quizMode"]
   );
@@ -17,9 +17,9 @@ const SelectedQuizModeSettingsView: React.FC = () => {
     users?.length &&
     users.map((user, index) => {
       return (
-        <QuestionsCategories
+        <QuestionsCatg
           key={user.id}
-          playerId={user.id}
+          userId={user.id}
           playerName={user.name}
           players={users}
           questionsShouldLoad={users[index].quizData.questionsShouldLoad}
@@ -40,4 +40,4 @@ const SelectedQuizModeSettingsView: React.FC = () => {
   );
 };
 
-export default SelectedQuizModeSettingsView;
+export default QuizModeSettingsView;

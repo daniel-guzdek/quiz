@@ -14,7 +14,7 @@ const ConfigSummary = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [allQuestions, setAllQuestions] = useState<any[]>([]);
-  const [allCategoriesIds, setAllCategoriesIds] = useState<number[]>([]);
+  const [allCatgIds, setAllCatgIds] = useState<number[]>([]);
   // const [urls, setUrls] = useState<string[]>([]);
 
   const { quizMode } = useSelector((state: RootState) => state.quiz);
@@ -28,19 +28,19 @@ const ConfigSummary = () => {
 
   useEffect(() => {
     console.log(users);
-    let categoriesIds: number[] = [];
+    let catgIds: number[] = [];
     users.length &&
       users.forEach((user) => {
-        console.log(user.quizData.selectedCategories);
+        console.log(user.quizData.selectedCatg);
 
-        user.quizData.selectedCategories.forEach((category) =>
-          categoriesIds.push(category.id)
+        user.quizData.selectedCatg.forEach((category) =>
+          catgIds.push(category.id)
         );
       });
 
-    console.log(categoriesIds);
+    console.log(catgIds);
 
-    const urls = categoriesIds.map(
+    const urls = catgIds.map(
       (id) => `https://opentdb.com/api.php?amount=10&category=${id}`
     );
 
@@ -88,8 +88,8 @@ const ConfigSummary = () => {
               height: "70px",
             }}
           >
-            {user.quizData.selectedCategories.length ? (
-              user.quizData.selectedCategories.map((category) => (
+            {user.quizData.selectedCatg.length ? (
+              user.quizData.selectedCatg.map((category) => (
                 <Chip
                   key={category.id}
                   label={category.name}
@@ -100,7 +100,7 @@ const ConfigSummary = () => {
             ) : (
               <Chip
                 key={0}
-                label="All categories"
+                label="All catg"
                 variant="outlined"
                 style={{ border: `1px solid #ccc`, margin: "0 5px" }}
               />

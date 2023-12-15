@@ -3,10 +3,10 @@ import { User } from "../types/appTypes";
 export interface InitialState {
   quizMode: string;
   isQuizModeSet: boolean;
-  playersMode: string;
+  usersMode: string;
   isPlayersModeSet: boolean;
   isFormValid: boolean;
-  numOfPlayers: number;
+  usersNum: number;
   numOfQuestions: number;
   users: Array<User>;
 }

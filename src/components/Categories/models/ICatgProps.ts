@@ -1,8 +1,8 @@
 import { User } from "../../../ts/types/appTypes";
 
-export interface ICategoriesProps {
+export interface ICatgProps {
   quizMode: string;
   users: User[];
   userId: number;
-  setCustomUserId: (userId: number, users: User[]) => number;
+  getIndicatedUserId: (userId: number, users: User[]) => number;
 }

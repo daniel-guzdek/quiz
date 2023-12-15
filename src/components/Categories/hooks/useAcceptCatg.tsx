@@ -1,48 +1,55 @@
 import { useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { Category } from "../../../ts/types/appTypes";
-import { ICategoriesProps } from "../models/ICategoriesProps";
+import { ICatgProps } from "../models/ICatgProps";
 import { mode } from "../../../constants/constants";
+import useUsersData from "../../../hooks/useUsersData";
 
-interface IAcceptCategoriesProps extends ICategoriesProps {
-  setSelectedCategories: React.Dispatch<React.SetStateAction<[] | Category[]>>;
-  selectedCategories: Category[];
+interface IAcceptCatgProps extends ICatgProps {
+  setSelectedCatg: React.Dispatch<React.SetStateAction<[] | Category[]>>;
+  selectedCatg: Category[];
   questionsShouldLoad?: boolean;
 }
 
-const useAcceptCategories = ({
+const useAcceptCatg = ({
   quizMode,
   users,
   userId,
-  selectedCategories,
-  setCustomUserId,
+  selectedCatg,
+  getIndicatedUserId,
   questionsShouldLoad,
-}: IAcceptCategoriesProps) => {
+}: IAcceptCatgProps) => {
   const dispatch = useDispatch();
+
+  const {
+    usersNum,
+    indicatedUserId,
+    indicatedUserCatgNum,
+    indicatedUserCatgShouldLoad,
+  } = useUsersData({ quizMode, users, userId, getIndicatedUserId });
 
   const questionsShouldLoadPayload = useMemo(
     () => ({
-      userId:
-        quizMode === mode.ON_THE_EDGE ? setCustomUserId(userId, users) : userId,
+      userId: quizMode === mode.ON_THE_EDGE ? indicatedUserId : userId,
       questionsShouldLoad: true,
     }),
-    [userId, users, quizMode, setCustomUserId]
+    [userId, quizMode, indicatedUserId]
   );
 
   const getPlayerQuizDataPayload = useCallback(
     (userId: number, questionsShouldLoad: boolean) => ({
       userId,
-      selectedCategories: selectedCategories,
+      selectedCatg,
       questionsShouldLoad,
     }),
-    [selectedCategories]
+    [selectedCatg]
   );
 
-  const handleAcceptCategories = useCallback(() => {
+  const handleAcceptCatg = useCallback(() => {
     if (quizMode === mode.ON_THE_EDGE) {
       dispatch({
         type: "set-actual-user-id",
-        payload: userId + 1 > users.length ? 1 : userId + 1,
+        payload: userId + 1 > usersNum ? 1 : userId + 1,
       });
       dispatch({
         type: "questions-should-load",
@@ -61,7 +68,7 @@ const useAcceptCategories = ({
   }, [
     dispatch,
     userId,
-    users,
+    usersNum,
     quizMode,
     getPlayerQuizDataPayload,
     questionsShouldLoadPayload,
@@ -69,27 +76,22 @@ const useAcceptCategories = ({
 
   const disabledAcceptBtn = useCallback(() => {
     if (quizMode === mode.ON_THE_EDGE) {
-      return (
-        users[setCustomUserId(userId, users) - 1].quizData.selectedCategories
-          .length === 0 ||
-        users[setCustomUserId(userId, users) - 1].quizData.questionsShouldLoad
-      );
+      return !indicatedUserCatgNum || indicatedUserCatgShouldLoad;
     } else {
-      return questionsShouldLoad || !selectedCategories.length;
+      return questionsShouldLoad || !selectedCatg.length;
     }
   }, [
-    userId,
-    users,
     questionsShouldLoad,
     quizMode,
-    selectedCategories.length,
-    setCustomUserId,
+    selectedCatg.length,
+    indicatedUserCatgNum,
+    indicatedUserCatgShouldLoad,
   ]);
 
   return {
     disabledAcceptBtn,
-    handleAcceptCategories,
+    handleAcceptCatg,
   };
 };
 
-export default useAcceptCategories;
+export default useAcceptCatg;

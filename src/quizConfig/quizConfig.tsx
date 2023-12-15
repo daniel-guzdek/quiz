@@ -40,12 +40,12 @@ export const quizConfig = {
       isMultiPlayerMode: true,
       requiredNumOfPlayers: [2, 4],
       description:
-        "The other Player selects the question categories for his opponent",
-      categoriesNum: 3,
+        "The other Player selects the question catg for his opponent",
+      catgNum: 3,
     },
   ],
-  maxNumCategories: 3,
-  categories: [
+  maxCatgNum: 3,
+  catg: [
     {
       id: Category.BOOKS,
       name: "Books",

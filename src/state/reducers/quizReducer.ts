@@ -5,10 +5,10 @@ import { Action } from "../actions";
 const initialState = {
   quizMode: "",
   isQuizModeSet: false,
-  playersMode: "",
+  usersMode: "",
   isPlayersModeSet: false,
   isFormValid: false,
-  numOfPlayers: 0,
+  usersNum: 0,
   numOfQuestions: 10,
   actualUserId: 1,
   users: [],
@@ -20,10 +20,10 @@ const reducer = (state: InitialState = initialState, action: Action) => {
       return {
         quizMode: "",
         isQuizModeSet: false,
-        playersMode: "",
+        usersMode: "",
         isPlayersModeSet: false,
         isFormValid: false,
-        numOfPlayers: 0,
+        usersNum: 0,
         numOfQuestions: 10,
         actualUserId: 1,
         users: [],
@@ -31,31 +31,31 @@ const reducer = (state: InitialState = initialState, action: Action) => {
     case ActionType.SET_SINGLE_PLAYER_MODE:
       return {
         ...state,
-        playersMode: "Single Player",
+        usersMode: "Single Player",
         isPlayersModeSet: true,
-        numOfPlayers: 1,
+        usersNum: 1,
       };
     case ActionType.SET_MULTI_PLAYER_MODE:
       return {
         ...state,
-        playersMode: "Multi Player",
+        usersMode: "Multi Player",
         isPlayersModeSet: true,
-        numOfPlayers: 2,
+        usersNum: 2,
       };
     case ActionType.SELECT_NUMBER_OF_PLAYERS:
       if (!action.payload) {
         return {
           ...state,
-          playersMode: "",
+          usersMode: "",
           isPlayersModeSet: false,
-          numOfPlayers: action.payload,
+          usersNum: action.payload,
         };
       } else {
         return {
           ...state,
-          playersMode: "Multi Player",
+          usersMode: "Multi Player",
           isPlayersModeSet: true,
-          numOfPlayers: action.payload,
+          usersNum: action.payload,
         };
       }
     case ActionType.ADD_USER_NAME:
@@ -89,8 +89,8 @@ const reducer = (state: InitialState = initialState, action: Action) => {
         ...state,
         users: [
           ...state.users,
-          (state.users[action.payload.userId - 1].quizData.selectedCategories =
-            action.payload.selectedCategories),
+          (state.users[action.payload.userId - 1].quizData.selectedCatg =
+            action.payload.selectedCatg),
           (state.users[action.payload.userId - 1].quizData.questionsShouldLoad =
             action.payload.questionsShouldLoad),
         ].splice(0, state.users.length),
@@ -118,8 +118,7 @@ const reducer = (state: InitialState = initialState, action: Action) => {
         ...state,
         users: [
           ...state.users,
-          (state.users[action.payload.userId - 1].quizData.selectedCategories =
-            []),
+          (state.users[action.payload.userId - 1].quizData.selectedCatg = []),
         ].splice(0, state.users.length),
       };
     case ActionType.SET_ACTUAL_USER_ID:

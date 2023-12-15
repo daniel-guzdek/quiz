@@ -11,29 +11,29 @@ export const resetStore = () => {
   };
 };
 
-export const setSinglePlayerMode = (numOfPlayers: number) => {
+export const setSinglePlayerMode = (usersNum: number) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SET_SINGLE_PLAYER_MODE,
-      payload: { numOfPlayers },
+      payload: { usersNum },
     });
   };
 };
 
-export const setMultiPlayerMode = (numOfPlayers: number) => {
+export const setMultiPlayerMode = (usersNum: number) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SET_MULTI_PLAYER_MODE,
-      payload: { numOfPlayers },
+      payload: { usersNum },
     });
   };
 };
 
-export const setNumberOfPlayers = (numOfPlayers: number) => {
+export const setNumberOfPlayers = (usersNum: number) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SELECT_NUMBER_OF_PLAYERS,
-      payload: { numOfPlayers },
+      payload: { usersNum },
     });
   };
 };
@@ -52,7 +52,7 @@ export const addUserName = (id: number, name: string) => {
         isWinner: false,
         quizData: {
           questionsShouldLoad: false,
-          selectedCategories: [],
+          selectedCatg: [],
           allQuestions: [],
         },
       },
@@ -87,16 +87,13 @@ export const setQuizMode = (quizMode: string) => {
   };
 };
 
-export const setPlayerQuizData = (
-  userId: number,
-  selectedCategories: Category[]
-) => {
+export const setPlayerQuizData = (userId: number, selectedCatg: Category[]) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SET_PLAYER_QUIZ_DATA,
       payload: {
         userId: userId,
-        selectedCategories: selectedCategories,
+        selectedCatg: selectedCatg,
         questionsShouldLoad: true,
       },
     });
@@ -139,7 +136,7 @@ export const setActualUserId = (userId: number) => {
   };
 };
 
-export const resetUserCategories = (userId: number, users: User[]) => {
+export const resetUserCatg = (userId: number, users: User[]) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.RESET_USER_CATEGORIES,

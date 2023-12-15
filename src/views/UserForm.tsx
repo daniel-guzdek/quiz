@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { RootState } from "../state/reducers";
 import { useDispatch, useSelector } from "react-redux";
-import SelectNumberOfPlayers from "../components/SelectNumberOfPlayers";
+import SelectPlayersNum from "../components/SelectPlayersNum";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Title from "../components/common/Title/Title";
@@ -10,7 +10,7 @@ import { ImUsers } from "react-icons/im";
 import "../styles/app.less";
 
 const UserForm: React.FC = () => {
-  const { playersMode, numOfPlayers, isFormValid } = useSelector(
+  const { usersMode, usersNum, isFormValid } = useSelector(
     (state: RootState) => state.quiz
   );
 
@@ -62,8 +62,8 @@ const UserForm: React.FC = () => {
       payload: [],
     });
 
-    const dispatchUsers = (numOfPlayers: number) => {
-      for (let i = 0; i < numOfPlayers; i++) {
+    const dispatchUsers = (usersNum: number) => {
+      for (let i = 0; i < usersNum; i++) {
         dispatch({
           type: "add-user-name",
           payload: {
@@ -78,7 +78,7 @@ const UserForm: React.FC = () => {
             isWinner: false,
             quizData: {
               questionsShouldLoad: false,
-              selectedCategories: [],
+              selectedCatg: [],
               allQuestions: [],
             },
           },
@@ -86,7 +86,7 @@ const UserForm: React.FC = () => {
       }
     };
 
-    dispatchUsers(numOfPlayers);
+    dispatchUsers(usersNum);
   };
 
   const displayGameModesPanel = () => {
@@ -111,7 +111,7 @@ const UserForm: React.FC = () => {
         />
       );
     })
-    .slice(0, numOfPlayers);
+    .slice(0, usersNum);
 
   const renderForm = (
     <Box
@@ -140,8 +140,8 @@ const UserForm: React.FC = () => {
   return (
     <Box className="centered centered-column">
       <Title text="Select number of Players" variant="h6" mt={4} mb={2} />
-      <Title text={`mode: ${playersMode}`} variant="subtitle2" mb={2} />
-      {playersMode === "Single Player" ? (
+      <Title text={`mode: ${usersMode}`} variant="subtitle2" mb={2} />
+      {usersMode === "Single Player" ? (
         <Box className="centered centered-column">
           <Btn
             name="Multi Player"
@@ -154,8 +154,8 @@ const UserForm: React.FC = () => {
         </Box>
       ) : (
         <div>
-          {isFormValid ? null : <SelectNumberOfPlayers />}
-          {numOfPlayers ? renderForm : null}
+          {isFormValid ? null : <SelectPlayersNum />}
+          {usersNum ? renderForm : null}
         </div>
       )}
     </Box>

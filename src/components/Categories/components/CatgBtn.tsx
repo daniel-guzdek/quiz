@@ -1,26 +1,36 @@
 import { useEffect, useState } from "react";
 import { RootState } from "../../../state/reducers";
 import { useDispatch, useSelector } from "react-redux";
-import { SelectedCategories } from "../../../ts/types/appTypes";
-import { setCustomUserId } from "../../../utils/setCustomUserId";
+import { SelectedCatg } from "../../../ts/types/appTypes";
+import { getIndicatedUserId } from "../../../utils/getIndicatedUserId";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Title from "../../common/Title/Title";
-import { ICategoryBtnProps } from "../models/ICategoryBtnProps";
-import "../../../styles/app.less";
+import { ICategoryBtnProps } from "../models/ICatgBtnProps";
 import { mode } from "../../../constants/constants";
+import useUsersData from "../../../hooks/useUsersData";
+import "../../../styles/app.less";
 
-const CategoryBtn = (props: ICategoryBtnProps) => {
+const CatgBtn = (props: ICategoryBtnProps) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const { quizMode, users } = useSelector((state: RootState) => state.quiz);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    !props.selectedCategories.length && setIsDisabled(false);
-  }, [props.selectedCategories]);
+  const { selectedUserId, selectedCatg, setSelectedCatg } = props;
 
-  const categoryObj = {
+  const { indicatedUserId } = useUsersData({
+    quizMode,
+    users,
+    userId: selectedUserId,
+    getIndicatedUserId,
+  });
+
+  useEffect(() => {
+    !props.selectedCatg.length && setIsDisabled(false);
+  }, [props.selectedCatg]);
+
+  const catgObj = {
     id: props.categoryId,
     name: props.categoryName,
     color: props.bgColor,
@@ -29,24 +39,22 @@ const CategoryBtn = (props: ICategoryBtnProps) => {
 
   const handleCategoryBtn = () => {
     if (quizMode === mode.ON_THE_EDGE) {
-      props.setSelectedCategories((selectedCategories: SelectedCategories) => [
-        ...selectedCategories,
-        categoryObj,
+      setSelectedCatg((selectedCatg: SelectedCatg) => [
+        ...selectedCatg,
+        catgObj,
       ]);
       dispatch({
         type: "set-player-quiz-data",
         payload: {
-          userId:
-            props.selectedUserId &&
-            setCustomUserId(props.selectedUserId, users),
-          selectedCategories: [...props.selectedCategories, categoryObj],
+          userId: selectedUserId && indicatedUserId,
+          selectedCatg: [...selectedCatg, catgObj],
           questionsShouldLoad: false,
         },
       });
     } else {
-      props.setSelectedCategories((selectedCategories: SelectedCategories) => [
-        ...selectedCategories,
-        categoryObj,
+      setSelectedCatg((selectedCatg: SelectedCatg) => [
+        ...selectedCatg,
+        catgObj,
       ]);
     }
 
@@ -72,4 +80,4 @@ const CategoryBtn = (props: ICategoryBtnProps) => {
   );
 };
 
-export default CategoryBtn;
+export default CatgBtn;

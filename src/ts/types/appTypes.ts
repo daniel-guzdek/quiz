@@ -8,7 +8,7 @@ export type User = {
   isWinner: boolean;
   quizData: {
     questionsShouldLoad: boolean;
-    selectedCategories: Category[];
+    selectedCatg: Category[];
     allQuestions: Question[] | [];
   };
 };
@@ -30,4 +30,4 @@ export type Category = {
   questions: Question[];
 };
 
-export type SelectedCategories = Category[];
+export type SelectedCatg = Category[];

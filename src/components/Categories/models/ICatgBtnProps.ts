@@ -6,8 +6,8 @@ export interface ICategoryBtnProps {
   categoryId: number;
   categoryName: string;
   disabled: boolean;
-  selectedCategories: Category[];
+  selectedCatg: Category[];
   selectedUserId: number;
   selectedUserName: string;
-  setSelectedCategories: React.Dispatch<React.SetStateAction<Category[] | []>>;
+  setSelectedCatg: React.Dispatch<React.SetStateAction<Category[] | []>>;
 }

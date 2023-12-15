@@ -15,7 +15,7 @@ interface SetMultiPlayerModeAction {
 
 interface SetNumberOfPlayersAction {
   type: ActionType.SELECT_NUMBER_OF_PLAYERS;
-  payload: { numOfPlayers: number };
+  payload: { usersNum: number };
 }
 
 interface SetIsFormValidAction {
@@ -35,7 +35,7 @@ interface AddUserNameAction {
     isWinner: boolean;
     quizData: {
       questionsShouldLoad: boolean;
-      selectedCategories: [];
+      selectedCatg: [];
       allQuestions: [];
     };
   };
@@ -55,7 +55,7 @@ interface SetPlayerQuizDataAction {
   type: ActionType.SET_PLAYER_QUIZ_DATA;
   payload: {
     userId: number;
-    selectedCategories: Category[] | [];
+    selectedCatg: Category[] | [];
     questionsShouldLoad: true;
   };
 }
@@ -76,7 +76,7 @@ interface SetQuestionsForEachUser {
   };
 }
 
-interface ResetUserCategories {
+interface ResetUserCatg {
   type: ActionType.RESET_USER_CATEGORIES;
   payload: {
     userId: number;
@@ -106,6 +106,6 @@ export type Action =
   | SetPlayerQuizDataAction
   | SetQuestionsShouldLoad
   | SetQuestionsForEachUser
-  | ResetUserCategories
+  | ResetUserCatg
   | SetActualUserIdAction
   | CountScoreAction;
