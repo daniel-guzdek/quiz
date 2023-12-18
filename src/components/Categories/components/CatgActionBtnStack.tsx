@@ -7,10 +7,6 @@ import { Category } from "../../../ts/types/appTypes";
 
 interface ICatgActionBtnStackProps {
   quizMode: string;
-  //     userName: string;
-  //   actualUserId: number;
-  //   setSelectedCatg: React.Dispatch<React.SetStateAction<[] | Category[]>>;
-  //   questionsShouldLoad: boolean;
   selectedCatg: Category[];
   handleResetCatg: () => void;
   disabledResetBtn: () => boolean;
@@ -21,7 +17,6 @@ interface ICatgActionBtnStackProps {
   handleAcceptCatg: () => void;
   disabledAcceptBtn: () => boolean;
   hiddenCatgButtons: () => string;
-  // handleResetCatg,handleAcceptCatg, disabledResetBtn, selectRandomCatg, disabledRandomCatgBtn, disabledAcceptBtn
 }
 
 const CatgActionBtnStack = ({

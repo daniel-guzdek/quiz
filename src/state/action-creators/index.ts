@@ -53,7 +53,7 @@ export const addUserName = (id: number, name: string) => {
         quizData: {
           questionsShouldLoad: false,
           selectedCatg: [],
-          allQuestions: [],
+          questions: [],
         },
       },
     });
@@ -114,14 +114,14 @@ export const setQuestionsShouldLoad = (
 
 export const setQuestionsForEachUser = (
   userId: number,
-  allQuestions: Question[]
+  questions: Question[]
 ) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SET_QUESTIONS_FOR_EACH_USER,
       payload: {
         userId,
-        allQuestions,
+        questions,
       },
     });
   };

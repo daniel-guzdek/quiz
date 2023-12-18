@@ -36,7 +36,7 @@ interface AddUserNameAction {
     quizData: {
       questionsShouldLoad: boolean;
       selectedCatg: [];
-      allQuestions: [];
+      questions: [];
     };
   };
 }
@@ -72,7 +72,7 @@ interface SetQuestionsForEachUser {
   type: ActionType.SET_QUESTIONS_FOR_EACH_USER;
   payload: {
     userId: number;
-    allQuestions: Question[];
+    questions: Question[];
   };
 }
 

@@ -9,7 +9,7 @@ const QuestionRoundView = () => {
   const [urls, setUrls] = useState();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [allQuestions, setAllQuestions] = useState<any[]>([]);
+  const [questions, setQuestions] = useState<any[]>([]);
   const [localUsers, setLocalUsers] = useState<User[]>([]);
 
   const dispatch = useDispatch();
@@ -26,13 +26,13 @@ const QuestionRoundView = () => {
   useEffect(() => {
     if (!isLoading) {
       const users = localUsers.map((localUser, index) => {
-        localUser.quizData.allQuestions = allQuestions;
+        localUser.quizData.questions = questions;
         return localUser;
       });
       setLocalUsers(users);
     }
     console.log(localUsers);
-  }, [allQuestions, users, isLoading, localUsers]);
+  }, [questions, users, isLoading, localUsers]);
 
   useEffect(() => {
     const fetchQuestions = () => {
@@ -43,7 +43,7 @@ const QuestionRoundView = () => {
           .get("https://opentdb.com/api.php?amount=15&type=multiple")
           .then((response) => {
             console.log(response.data.results);
-            setAllQuestions(response.data.results);
+            setQuestions(response.data.results);
           })
           .then(() => setIsLoading(false))
           .catch(() => setIsError(true));
@@ -52,7 +52,7 @@ const QuestionRoundView = () => {
     };
 
     fetchQuestions();
-  }, [allQuestions, quizMode]);
+  }, [questions, quizMode]);
 
   return (
     <div>

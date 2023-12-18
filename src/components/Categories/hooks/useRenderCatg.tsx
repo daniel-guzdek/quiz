@@ -10,8 +10,7 @@ import Title from "../../common/Title/Title";
 import { renderSelectedCatg } from "../utils/renderSelectedCatg";
 import { mode } from "../../../constants/constants";
 import CatgActionBtnStack from "../components/CatgActionBtnStack";
-import UserCatgStack from "../components/UserCatgStack";
-import IndicatedUserCatgStack from "../components/IndicatedUserCatgStack";
+import UsersCatgStack from "../components/UsersCatgStack";
 import "../../../styles/app.less";
 
 interface IRenderCatgProps extends ICatgProps {
@@ -90,22 +89,13 @@ const useRenderCatg = ({
         >
           <Title text={getInfo()} variant="h6" mb={3} />
           <Box className="centered centered-column">
-            <UserCatgStack
+            <UsersCatgStack
               quizMode={quizMode}
               users={users}
               userId={userId}
               selectedCatg={selectedCatg}
               renderSelectedCatg={renderSelectedCatg}
             />
-            {quizMode === mode.ON_THE_EDGE && (
-              <IndicatedUserCatgStack
-                quizMode={quizMode}
-                users={users}
-                userId={userId}
-                renderSelectedCatg={renderSelectedCatg}
-              />
-            )}
-
             <CatgActionBtnStack
               quizMode={quizMode}
               handleResetCatg={handleResetCatg}

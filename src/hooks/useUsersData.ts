@@ -5,13 +5,9 @@ interface IUsersDataProps {
   users: User[];
   userId: number;
   getIndicatedUserId: (userId: number, users: User[]) => number;
-  //   setSelectedCatg: React.Dispatch<React.SetStateAction<[] | Category[]>>;
-  //   questionsShouldLoad: boolean;
-  //   selectedCatg: Category[];
 }
 
 const useUsersData = ({
-  // quizMode,
   users,
   userId,
   getIndicatedUserId,

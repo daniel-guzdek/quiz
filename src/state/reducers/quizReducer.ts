@@ -9,7 +9,7 @@ const initialState = {
   isPlayersModeSet: false,
   isFormValid: false,
   usersNum: 0,
-  numOfQuestions: 10,
+  numOfQuestions: 0,
   actualUserId: 1,
   users: [],
 };
@@ -24,7 +24,7 @@ const reducer = (state: InitialState = initialState, action: Action) => {
         isPlayersModeSet: false,
         isFormValid: false,
         usersNum: 0,
-        numOfQuestions: 10,
+        numOfQuestions: 0,
         actualUserId: 1,
         users: [],
       };
@@ -79,11 +79,6 @@ const reducer = (state: InitialState = initialState, action: Action) => {
         quizMode: action.payload.quizMode,
         isQuizModeSet: action.payload.isQuizModeSet,
       };
-    // case ActionType.SET_IS_QUIZ_MODE_SET:
-    //   return {
-    //     ...state,
-    //     isQuizModeSet: action.payload,
-    //   };
     case ActionType.SET_PLAYER_QUIZ_DATA:
       return {
         ...state,
@@ -109,8 +104,8 @@ const reducer = (state: InitialState = initialState, action: Action) => {
         ...state,
         users: [
           ...state.users,
-          (state.users[action.payload.userId - 1].quizData.allQuestions =
-            action.payload.allQuestions),
+          (state.users[action.payload.userId - 1].quizData.questions =
+            action.payload.questions),
         ].splice(0, state.users.length),
       };
     case ActionType.RESET_USER_CATEGORIES:

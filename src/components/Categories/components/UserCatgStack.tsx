@@ -3,15 +3,7 @@ import Title from "../../common/Title/Title";
 import { mode } from "../../../constants/constants";
 import useUsersData from "../../../hooks/useUsersData";
 import { getIndicatedUserId } from "../../../utils/getIndicatedUserId";
-import { Category, User } from "../../../ts/types/appTypes";
-
-interface IUserCatgStackProps {
-  quizMode: string;
-  users: User[];
-  userId: number;
-  selectedCatg: Category[];
-  renderSelectedCatg: (catg: Category[]) => JSX.Element[] | "-";
-}
+import { IUserCatgStackProps } from "../models/IUserCatgStackProps";
 
 const UserCatgStack = ({
   quizMode,

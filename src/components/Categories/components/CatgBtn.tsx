@@ -34,7 +34,6 @@ const CatgBtn = (props: ICategoryBtnProps) => {
     id: props.categoryId,
     name: props.categoryName,
     color: props.bgColor,
-    questions: [],
   };
 
   const handleCategoryBtn = () => {

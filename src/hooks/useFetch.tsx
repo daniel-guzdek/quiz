@@ -1,27 +1,40 @@
-import { useState, useEffect } from "react";
-import { Difficulty } from "../ts/enums/appEnums";
-import { QuestionsState } from "../ts/types/appTypes";
+import { useState, SetStateAction } from "react";
+import { User } from "../ts/types/appTypes";
+import axios from "axios";
+import { quizConfig } from "../quizConfig/quizConfig";
 
-export const useFetch = ({ url }: any) => {
-  const [response, setResponse] = useState({});
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+export const useFetch = (users: User[], actualUserId: number | null) => {
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [error, setError] = useState<SetStateAction<string | null>>(null);
+  const [loading, setLoading] = useState(false);
 
-  const fetchQuestions = async (
-    amount: number,
-    category: string,
-    difficulty: Difficulty
-  ): Promise<QuestionsState[]> => {
-    const endpoint = `https://opentdb.com/api.php?amount=${amount}&category=${category}difficulty=${difficulty}&type=multiple`;
-    const data = await (await fetch(endpoint)).json();
-    setResponse(data);
-    console.log(data);
-    return data;
+  const user = actualUserId ? users[actualUserId - 1] : null;
+  const catIds = user?.quizData.selectedCatg.map((cat) => cat.id);
+  const amount = quizConfig.questions.amount;
+
+  const urls = catIds?.length
+    ? catIds?.map(
+        (id) => `https://opentdb.com/api.php?amount=${amount}&category=${id}`
+      )
+    : [];
+
+  const loadData = async () => {
+    setLoading(true);
+
+    Promise.all(urls.map((endpoint) => axios.get(endpoint)))
+      .then((res) => {
+        setError(null);
+        const results = res.map((el) => el.data.results);
+        setQuestions(results);
+        return results;
+      })
+      .finally(() => {
+        setLoading(false);
+      })
+      .catch((err) => setError(err));
+
+    return questions;
   };
 
-  useEffect(() => {
-    fetchQuestions(10, "Sport", Difficulty.EASY);
-  }, [url]);
-
-  return { response, error, loading };
+  return { questions, error, loading, loadData };
 };

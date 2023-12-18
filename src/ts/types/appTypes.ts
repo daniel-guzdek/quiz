@@ -9,7 +9,7 @@ export type User = {
   quizData: {
     questionsShouldLoad: boolean;
     selectedCatg: Category[];
-    allQuestions: Question[] | [];
+    questions: Question[];
   };
 };
 
@@ -27,7 +27,6 @@ export type QuestionsState = Question & { answers: string[] };
 export type Category = {
   id: number;
   name: string;
-  questions: Question[];
 };
 
 export type SelectedCatg = Category[];

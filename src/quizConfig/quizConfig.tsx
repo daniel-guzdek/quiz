@@ -41,10 +41,10 @@ export const quizConfig = {
       requiredNumOfPlayers: [2, 4],
       description:
         "The other Player selects the question catg for his opponent",
-      catgNum: 3,
+      catgNum: 1,
     },
   ],
-  maxCatgNum: 3,
+  maxCatgNum: 1,
   catg: [
     {
       id: Category.BOOKS,
@@ -162,4 +162,7 @@ export const quizConfig = {
       color: "rgb(254, 69, 245)",
     },
   ],
+  questions: {
+    amount: 3,
+  },
 };

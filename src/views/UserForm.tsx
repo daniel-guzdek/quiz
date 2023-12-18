@@ -79,7 +79,7 @@ const UserForm: React.FC = () => {
             quizData: {
               questionsShouldLoad: false,
               selectedCatg: [],
-              allQuestions: [],
+              questions: [],
             },
           },
         });

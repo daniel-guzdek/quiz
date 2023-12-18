@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+// import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+// import axios from "axios";
 import Typography from "@mui/material/Typography";
 import { User } from "../ts/types/appTypes";
 import { RootState } from "../state/reducers";
@@ -8,58 +8,15 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import { Category as ICategory } from "../ts/enums/appEnums";
+// import { Category as ICategory } from "../ts/enums/appEnums";
 
 const ConfigSummary = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [allQuestions, setAllQuestions] = useState<any[]>([]);
-  const [allCatgIds, setAllCatgIds] = useState<number[]>([]);
-  // const [urls, setUrls] = useState<string[]>([]);
-
-  const { quizMode } = useSelector((state: RootState) => state.quiz);
+  // const { quizMode } = useSelector((state: RootState) => state.quiz);
   const users = useSelector((state: RootState): User[] => state.quiz["users"]);
-  const actualUserId = useSelector(
-    (state: RootState): number => state.quiz["actualUserId"]
-  );
+  // const actualUserId = useSelector(
+  //   (state: RootState): number => state.quiz["actualUserId"]
+  // );
   const dispatch = useDispatch();
-
-  const [questionsUrls, SetQuestionsUrls] = useState<any[]>([]);
-
-  useEffect(() => {
-    console.log(users);
-    let catgIds: number[] = [];
-    users.length &&
-      users.forEach((user) => {
-        console.log(user.quizData.selectedCatg);
-
-        user.quizData.selectedCatg.forEach((category) =>
-          catgIds.push(category.id)
-        );
-      });
-
-    console.log(catgIds);
-
-    const urls = catgIds.map(
-      (id) => `https://opentdb.com/api.php?amount=10&category=${id}`
-    );
-
-    SetQuestionsUrls(urls);
-  }, []);
-
-  useEffect(() => {
-    console.log(questionsUrls);
-
-    let URL1 = questionsUrls[0];
-    let URL2 = questionsUrls[1];
-
-    console.log(URL1, URL2);
-
-    const promise1 = axios.get(URL1);
-    const promise2 = axios.get(URL2);
-
-    Promise.all([promise1, promise2]).then((res) => console.log(res));
-  }, [questionsUrls]);
 
   const renderUsersSummary =
     users.length &&

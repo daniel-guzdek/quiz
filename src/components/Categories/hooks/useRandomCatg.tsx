@@ -48,7 +48,6 @@ const useRandomCatg = ({
             id: el,
             name: category?.name,
             color: category?.color,
-            questions: [],
           };
         });
 
