@@ -38,7 +38,6 @@ export const quizConfig = {
       icon: <GiAxeSword />,
       isSinglePlayerMode: true,
       isMultiPlayerMode: true,
-      requiredNumOfPlayers: [2, 4],
       description:
         "The other Player selects the question catg for his opponent",
       catgNum: 1,

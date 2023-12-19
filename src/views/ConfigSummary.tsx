@@ -1,106 +1,55 @@
-// import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-// import axios from "axios";
-import Typography from "@mui/material/Typography";
+import { useSelector } from "react-redux";
 import { User } from "../ts/types/appTypes";
 import { RootState } from "../state/reducers";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-// import { Category as ICategory } from "../ts/enums/appEnums";
+import Title from "../components/common/Title/Title";
+import Btn from "../components/common/Buttons/Button";
+import { Card } from "@mui/material";
+import "./../styles/app.less";
+import "../components/common/Title/Title";
 
 const ConfigSummary = () => {
-  // const { quizMode } = useSelector((state: RootState) => state.quiz);
   const users = useSelector((state: RootState): User[] => state.quiz["users"]);
-  // const actualUserId = useSelector(
-  //   (state: RootState): number => state.quiz["actualUserId"]
-  // );
-  const dispatch = useDispatch();
 
-  const renderUsersSummary =
-    users.length &&
-    users.map((user) => {
-      return (
-        <Box
-          key={user.id}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-          }}
-        >
-          <Typography variant="h6" mt={2}>
-            {user.name}
-          </Typography>
-          <Stack
-            direction="row"
-            spacing={1}
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              height: "70px",
-            }}
-          >
-            {user.quizData.selectedCatg.length ? (
-              user.quizData.selectedCatg.map((category) => (
-                <Chip
-                  key={category.id}
-                  label={category.name}
-                  variant="outlined"
-                  style={{ border: `1px solid #ccc`, margin: "0 5px" }}
-                />
-              ))
-            ) : (
+  const renderUsersSummary = users.map((user) => {
+    return (
+      <Card key={user.id} className="centered centered-column summary-card">
+        <Title text={user.name} variant="h6" className="title" />
+        <Stack className="centered centered-column">
+          {user.quizData.selectedCatg.length ? (
+            user.quizData.selectedCatg.map((category) => (
               <Chip
-                key={0}
-                label="All catg"
+                key={category.id}
+                label={category.name}
                 variant="outlined"
                 style={{ border: `1px solid #ccc`, margin: "0 5px" }}
+                className="centered centered-column"
               />
-            )}
-          </Stack>
-        </Box>
-      );
-    });
+            ))
+          ) : (
+            <Chip
+              key={0}
+              label="All categories"
+              variant="outlined"
+              style={{ border: `1px solid #ccc`, margin: "0 5px" }}
+              className="centered centered-column"
+            />
+          )}
+        </Stack>
+      </Card>
+    );
+  });
   return (
-    <Box
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        flexWrap: "wrap",
-      }}
-    >
-      <Typography variant="h4" gutterBottom mt={2} mb={4}>
-        Summary
-      </Typography>
+    <Box className="centered centered-column box">
+      <Title text="Config Summary" variant="h4" className="subtitle" />
       <Box>
-        <Box>
-          <Box>{renderUsersSummary}</Box>
+        <Box className="centered centered-row config-summary-box">
+          {renderUsersSummary}
         </Box>
-        <Box
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "20px",
-          }}
-        >
-          <Button
-            variant="contained"
-            color="error"
-            // onClick={
-            //   handleFetchAndDispatchQuestions
-            // }
-            // onClick={fetchData}
-          >
-            Start
-          </Button>
+        <Box className="centered centered-column box">
+          <Btn name="Start" variant="contained" color="success" />
         </Box>
       </Box>
     </Box>

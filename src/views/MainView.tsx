@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import QuizModesPanel from "../components/QuizModesPanel";
 import { RootState } from "../state/reducers";
-import UsersMode from "./UsersMode";
+import UserMode from "./UserMode";
 import QuizModeSettingsView from "./QuizModeSettingsView";
 import UserForm from "./UserForm";
 import { questionsCanLoad } from "../utils/loadQuestionsChecker";
@@ -33,7 +33,7 @@ const MainView = () => {
       <CssBaseline />
       <Container maxWidth="lg">
         <Box className="centered centered-box">
-          <Title text="Quiz" variant="h1" gutterBottom />
+          <Title text="Quiz" variant="h1" className="title" />
           <Btn
             name="Reset"
             variant="outlined"
@@ -41,7 +41,7 @@ const MainView = () => {
             handler={handleReset}
           />
           <Box className={isFormValid ? "hidden" : "centered centered-column"}>
-            {isPlayersModeSet ? <UserForm /> : <UsersMode />}
+            {isPlayersModeSet ? <UserForm /> : <UserMode />}
           </Box>
           <Box>
             {isFormValid && <QuizModesPanel />}

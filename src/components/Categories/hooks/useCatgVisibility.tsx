@@ -17,7 +17,7 @@ const useCatgVisibility = ({
     isOddUsersNum,
   } = useUsersData({ quizMode, users, userId, getIndicatedUserId });
 
-  const hiddenCatgButtons = () => {
+  const hideCatgButtons = () => {
     if (quizMode === mode.ON_THE_EDGE) {
       if (
         indicatedUserCatgNum === quizConfig.maxCatgNum ||
@@ -25,16 +25,16 @@ const useCatgVisibility = ({
         indicatedUserCatgShouldLoad
       ) {
         return "hidden";
-      } else return "catgWrapper";
+      } else return "catg-wrapper";
     } else {
       if (userCatgNum === quizConfig.maxCatgNum) {
         return "hidden";
-      } else return "catgWrapper";
+      } else return "catg-wrapper";
     }
   };
 
   return {
-    hiddenCatgButtons,
+    hideCatgButtons,
   };
 };
 

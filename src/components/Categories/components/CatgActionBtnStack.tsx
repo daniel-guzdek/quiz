@@ -16,7 +16,7 @@ interface ICatgActionBtnStackProps {
   disabledRandomCatgBtn: () => boolean | undefined;
   handleAcceptCatg: () => void;
   disabledAcceptBtn: () => boolean;
-  hiddenCatgButtons: () => string;
+  hideCatgButtons: () => string;
 }
 
 const CatgActionBtnStack = ({
@@ -36,11 +36,12 @@ const CatgActionBtnStack = ({
         disabled={disabledResetBtn()}
         variant="outlined"
         color="error"
+        className="btn-reset-catg btn-space"
       />
       {quizMode === mode.ON_THE_EDGE ? (
         <Btn
           name="Random Cat."
-          className="MuiButton-root btn-space"
+          className="btn-rand-catg btn-space"
           handler={selectRandomCatg(quizConfig.maxCatgNum)}
           disabled={disabledRandomCatgBtn()}
           variant="contained"
@@ -53,6 +54,7 @@ const CatgActionBtnStack = ({
         disabled={disabledAcceptBtn()}
         variant="contained"
         color="success"
+        className="btn-accept-catg btn-space"
       />
     </Box>
   );

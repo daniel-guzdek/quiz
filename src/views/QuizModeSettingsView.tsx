@@ -30,11 +30,10 @@ const QuizModeSettingsView: React.FC = () => {
   return (
     <Box
       className={`${
-        questionsCanLoad(users) ? "hidden" : "centered centered-column"
+        questionsCanLoad(users) ? "hidden" : "centered centered-column box"
       }`}
-      marginTop={"40px"}
     >
-      <Title text={quizMode} variant="h4" gutterBottom />
+      <Title text={quizMode} variant="h4" className="subtitle" />
       <Box>{renderSelectQuestionsForEachUser}</Box>
     </Box>
   );

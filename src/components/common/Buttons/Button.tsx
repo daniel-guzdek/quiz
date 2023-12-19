@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 
 interface IBtnProps {
   type?: "button" | "submit" | "reset" | undefined;
-  name: string;
+  name?: string;
   variant: "text" | "outlined" | "contained" | undefined;
   color:
     | "inherit"

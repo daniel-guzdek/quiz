@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import SelectPlayersNum from "../components/SelectPlayersNum";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Title from "../components/common/Title/Title";
 import Btn from "../components/common/Buttons/Button";
 import { ImUsers } from "react-icons/im";
 import "../styles/app.less";
@@ -138,9 +137,7 @@ const UserForm: React.FC = () => {
   );
 
   return (
-    <Box className="centered centered-column">
-      <Title text="Select number of Players" variant="h6" mt={4} mb={2} />
-      <Title text={`mode: ${usersMode}`} variant="subtitle2" mb={2} />
+    <Box className="centered centered-column box">
       {usersMode === "Single Player" ? (
         <Box className="centered centered-column">
           <Btn

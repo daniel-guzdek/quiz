@@ -4,7 +4,6 @@ import { RootState } from "../state/reducers";
 import { quizConfig } from "../quizConfig/quizConfig";
 import QuizMode from "./QuizMode";
 import Box from "@mui/material/Box";
-import Title from "./common/Title/Title";
 
 const QuizModesPanel = () => {
   const [isSinglePlayerMode, setIsSinglePlayerMode] = useState(false);
@@ -36,8 +35,9 @@ const QuizModesPanel = () => {
     });
 
   return (
-    <Box className={`${isQuizModeSet ? "hidden" : "centered centered-column"}`}>
-      <Title text="Select Quiz Mode" variant="h6" mt={4} mb={2} />
+    <Box
+      className={`${isQuizModeSet ? "hidden" : "centered centered-column box"}`}
+    >
       <Box className="centered centered-row" flexWrap="wrap">
         {renderModes}
       </Box>

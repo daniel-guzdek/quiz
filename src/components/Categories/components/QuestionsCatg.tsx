@@ -50,7 +50,7 @@ const QuestionsCatg: React.FC<QuestionsCatgProps> = (
     questionsShouldLoad: props.questionsShouldLoad,
   });
 
-  const { hiddenCatgButtons } = useCatgVisibility({
+  const { hideCatgButtons } = useCatgVisibility({
     quizMode,
     users: props.players,
     userId: props.userId,
@@ -73,7 +73,7 @@ const QuestionsCatg: React.FC<QuestionsCatgProps> = (
     disabledRandomCatgBtn,
     handleAcceptCatg,
     disabledAcceptBtn,
-    hiddenCatgButtons,
+    hideCatgButtons,
   });
 
   return (

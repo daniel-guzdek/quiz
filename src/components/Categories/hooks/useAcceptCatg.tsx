@@ -32,14 +32,18 @@ const useAcceptCatg = ({
     indicatedUserCatgShouldLoad,
   } = useUsersData({ quizMode, users, userId, getIndicatedUserId });
 
-  const { loading, questions, loadData } = useFetch(users, actualUserId);
+  const { loading, questions, loadData } = useFetch(
+    users,
+    actualUserId,
+    quizMode
+  );
 
   useEffect(() => {
-    loadData();
-  }, [actualUserId]);
+    quizMode !== "OMNIBUS" && actualUserId && loadData();
+  }, [actualUserId, quizMode]);
 
   useEffect(() => {
-    if (questions.length && !loading) {
+    if (quizMode !== "OMNIBUS" && questions.length && !loading) {
       dispatch({
         type: ActionType.SET_QUESTIONS_FOR_EACH_USER,
         payload: {
@@ -48,7 +52,7 @@ const useAcceptCatg = ({
         },
       });
     }
-  }, [actualUserId, dispatch, selectedCatg, questions, loading]);
+  }, [actualUserId, dispatch, selectedCatg, questions, loading, quizMode]);
 
   const questionsShouldLoadPayload = useMemo(
     () => ({

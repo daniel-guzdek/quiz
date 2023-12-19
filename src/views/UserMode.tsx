@@ -3,10 +3,9 @@ import { useDispatch } from "react-redux";
 import { ImUser, ImUsers } from "react-icons/im";
 import Stack from "@mui/material/Stack";
 import Btn from "../components/common/Buttons/Button";
-import Title from "../components/common/Title/Title";
 import "../styles/app.less";
 
-const UsersMode: React.FC = () => {
+const UserMode: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleDispatchUsersMode = (usersModeTypeName: string) => {
@@ -15,8 +14,7 @@ const UsersMode: React.FC = () => {
 
   return (
     <>
-      <Title text="Select Users' mode" variant="h6" mt={4} mb={2} />
-      <Stack direction="row" spacing={3} mb={2}>
+      <Stack direction="row" spacing={3} className="box">
         <Btn
           name="Single Player"
           variant="outlined"
@@ -36,4 +34,4 @@ const UsersMode: React.FC = () => {
   );
 };
 
-export default UsersMode;
+export default UserMode;

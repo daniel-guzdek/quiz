@@ -4,7 +4,7 @@ import { ICatgProps } from "../models/ICatgProps";
 import { quizConfig } from "../../../quizConfig/quizConfig";
 import CatgBtn from "../components/CatgBtn";
 import { displayDefaultCatgCheck } from "./../../../utils/displayDefaultCatgCheck";
-import { renderInfo } from "../../../utils/renderInfo";
+import { renderInstruction } from "../../../utils/renderInstruction";
 import Box from "@mui/material/Box";
 import Title from "../../common/Title/Title";
 import { renderSelectedCatg } from "../utils/renderSelectedCatg";
@@ -27,7 +27,7 @@ interface IRenderCatgProps extends ICatgProps {
   disabledRandomCatgBtn: () => boolean | undefined;
   handleAcceptCatg: () => void;
   disabledAcceptBtn: () => boolean;
-  hiddenCatgButtons: () => string;
+  hideCatgButtons: () => string;
 }
 
 const useRenderCatg = ({
@@ -41,7 +41,7 @@ const useRenderCatg = ({
   disabledRandomCatgBtn,
   handleAcceptCatg,
   disabledAcceptBtn,
-  hiddenCatgButtons,
+  hideCatgButtons,
 }: IRenderCatgProps) => {
   const renderCatgButtons = quizConfig.catg.map((category) => {
     return (
@@ -55,7 +55,7 @@ const useRenderCatg = ({
         selectedUserName={userName}
         setSelectedCatg={setSelectedCatg}
         selectedCatg={selectedCatg}
-        disabled
+        disabled={selectedCatg.length === quizConfig.maxCatgNum}
       />
     );
   });
@@ -70,13 +70,10 @@ const useRenderCatg = ({
         }
       };
 
-      const getInfo = () => {
-        if (quizMode === mode.ON_THE_EDGE) {
-          return `${renderInfo(userId, userName, users)}`;
-        } else {
-          return `${userName}, please select categories`;
-        }
-      };
+      const getInstruction = () =>
+        quizMode === mode.ON_THE_EDGE
+          ? renderInstruction(userId, userName, users)
+          : ` ${userName}, please select categories`;
 
       return (
         <Box
@@ -84,31 +81,28 @@ const useRenderCatg = ({
           className="centered centered-column"
           style={{
             display: showContentCondition(),
-            paddingBottom: "60px",
           }}
         >
-          <Title text={getInfo()} variant="h6" mb={3} />
-          <Box className="centered centered-column">
-            <UsersCatgStack
-              quizMode={quizMode}
-              users={users}
-              userId={userId}
-              selectedCatg={selectedCatg}
-              renderSelectedCatg={renderSelectedCatg}
-            />
-            <CatgActionBtnStack
-              quizMode={quizMode}
-              handleResetCatg={handleResetCatg}
-              handleAcceptCatg={handleAcceptCatg}
-              disabledResetBtn={disabledResetBtn}
-              selectRandomCatg={selectRandomCatg}
-              disabledRandomCatgBtn={disabledRandomCatgBtn}
-              disabledAcceptBtn={disabledAcceptBtn}
-              selectedCatg={selectedCatg}
-              hiddenCatgButtons={hiddenCatgButtons}
-            />
-          </Box>
-          <Box className={hiddenCatgButtons()}>
+          <Title text={getInstruction()} className="info" />
+          <UsersCatgStack
+            quizMode={quizMode}
+            users={users}
+            userId={userId}
+            selectedCatg={selectedCatg}
+            renderSelectedCatg={renderSelectedCatg}
+          />
+          <CatgActionBtnStack
+            quizMode={quizMode}
+            handleResetCatg={handleResetCatg}
+            handleAcceptCatg={handleAcceptCatg}
+            disabledResetBtn={disabledResetBtn}
+            selectRandomCatg={selectRandomCatg}
+            disabledRandomCatgBtn={disabledRandomCatgBtn}
+            disabledAcceptBtn={disabledAcceptBtn}
+            selectedCatg={selectedCatg}
+            hideCatgButtons={hideCatgButtons}
+          />
+          <Box className={hideCatgButtons()}>
             {selectedCatg.length === quizConfig.maxCatgNum
               ? null
               : renderCatgButtons}
@@ -123,7 +117,7 @@ const useRenderCatg = ({
       handleAcceptCatg,
       handleResetCatg,
       renderCatgButtons,
-      hiddenCatgButtons,
+      hideCatgButtons,
       selectRandomCatg,
       selectedCatg,
     ]

@@ -3,13 +3,13 @@ import { RootState } from "../../../state/reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectedCatg } from "../../../ts/types/appTypes";
 import { getIndicatedUserId } from "../../../utils/getIndicatedUserId";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Title from "../../common/Title/Title";
 import { ICategoryBtnProps } from "../models/ICatgBtnProps";
 import { mode } from "../../../constants/constants";
 import useUsersData from "../../../hooks/useUsersData";
+import { Box, Button, Theme } from "@mui/material";
 import "../../../styles/app.less";
+import "./CatgBtn.less";
 
 const CatgBtn = (props: ICategoryBtnProps) => {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -60,22 +60,34 @@ const CatgBtn = (props: ICategoryBtnProps) => {
     setIsDisabled(true);
   };
 
-  const categoryCardStyles = {
+  const categoryBtnStyles = {
     display: isDisabled ? "none" : "block",
-    width: 180,
-    height: 60,
-    margin: "10px",
-    border: "none",
-    boxShadow: `${props.bgColor} 0px 1px 0px, ${props.bgColor} 0px 0px 8px`,
-    cursor: "pointer",
+    p: 1,
+    border: 1,
+    m: 1,
+    borderColor: (theme: Theme) => theme.palette.grey[300],
+    backgroundColor: (theme: Theme) => theme.palette.grey[100],
+    ":hover": {
+      color: (theme: Theme) => theme.palette.success.main,
+      borderColor: (theme: Theme) => theme.palette.success.main,
+    },
   };
 
   return (
-    <Card onClick={() => handleCategoryBtn()} sx={categoryCardStyles}>
-      <CardContent className="centered centered-column">
-        <Title text={props.categoryName} variant="subtitle2" />
-      </CardContent>
-    </Card>
+    <>
+      <Box>
+        <Button
+          variant="outlined"
+          size="large"
+          sx={categoryBtnStyles}
+          onClick={() => handleCategoryBtn()}
+          disabled={isDisabled}
+          className="catg-btn"
+        >
+          <Title text={props.categoryName} variant="body2" />
+        </Button>
+      </Box>
+    </>
   );
 };
 

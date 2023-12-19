@@ -1,7 +1,8 @@
 import Typography from "@mui/material/Typography";
+import "./Title.less";
 
 type TitleProps = {
-  text?: string;
+  text?: string | undefined | null;
   component?: "div" | "span";
   variant?:
     | "h1"
@@ -16,27 +17,11 @@ type TitleProps = {
     | "body2";
   color?: string;
   className?: string;
-  mt?: number;
-  mb?: number;
-  gutterBottom?: boolean;
 };
 
-const Title = ({
-  text,
-  variant,
-  className,
-  mt,
-  mb,
-  gutterBottom,
-}: TitleProps) => {
+const Title = ({ text, variant, className }: TitleProps) => {
   return (
-    <Typography
-      variant={variant}
-      className={className}
-      mt={mt}
-      mb={mb}
-      gutterBottom={gutterBottom}
-    >
+    <Typography variant={variant} className={className}>
       {text}
     </Typography>
   );
