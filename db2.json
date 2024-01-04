@@ -1,0 +1,409 @@
+{
+  "data": {
+    "books": [
+      {
+        "id": 1,
+        "catgId": 10,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Books",
+        "question": "Who wrote the 'Harry Potter' book series?",
+        "correct_answer": "J.K. Rowling",
+        "incorrect_answers": [
+          "George R.R. Martin",
+          "J.R.R. Tolkien",
+          "Stephen King"
+        ]
+      },
+      {
+        "id": 2,
+        "catgId": 10,
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Books",
+        "question": "In 'To Kill a Mockingbird', who is the lawyer defending Tom Robinson?",
+        "correct_answer": "Atticus Finch",
+        "incorrect_answers": ["Scout Finch", "Jem Finch", "Boo Radley"]
+      },
+      {
+        "id": 3,
+        "catgId": 10,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Books",
+        "question": "Who wrote the play 'Romeo and Juliet'?",
+        "correct_answer": "William Shakespeare",
+        "incorrect_answers": ["Jane Austen", "Charles Dickens", "Mark Twain"]
+      },
+      {
+        "id": 4,
+        "catgId": 10,
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Books",
+        "question": "Which author wrote 'The Great Gatsby'?",
+        "correct_answer": "F. Scott Fitzgerald",
+        "incorrect_answers": [
+          "Ernest Hemingway",
+          "J.D. Salinger",
+          "George Orwell"
+        ]
+      },
+      {
+        "id": 5,
+        "catgId": 10,
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Books",
+        "question": "In '1984' by George Orwell, what is the name of the oppressive regime in power?",
+        "correct_answer": "The Party",
+        "incorrect_answers": ["The Federation", "The Empire", "The Union"]
+      },
+      {
+        "id": 6,
+        "catgId": 10,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Books",
+        "question": "Who wrote 'The Catcher in the Rye'?",
+        "correct_answer": "J.D. Salinger",
+        "incorrect_answers": [
+          "F. Scott Fitzgerald",
+          "Ernest Hemingway",
+          "Mark Twain"
+        ]
+      },
+      {
+        "id": 7,
+        "catgId": 10,
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Books",
+        "question": "In 'The Lord of the Rings', who is the dark lord and main antagonist?",
+        "correct_answer": "Sauron",
+        "incorrect_answers": ["Saruman", "Gollum", "Balrog"]
+      },
+      {
+        "id": 8,
+        "catgId": 10,
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Books",
+        "question": "Which book is the first in the 'A Song of Ice and Fire' series by George R.R. Martin?",
+        "correct_answer": "A Game of Thrones",
+        "incorrect_answers": [
+          "A Clash of Kings",
+          "A Storm of Swords",
+          "A Dance with Dragons"
+        ]
+      },
+      {
+        "id": 9,
+        "catgId": 10,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Books",
+        "question": "Who wrote the play 'Hamlet'?",
+        "correct_answer": "William Shakespeare",
+        "incorrect_answers": ["Jane Austen", "Charles Dickens", "Mark Twain"]
+      },
+      {
+        "id": 10,
+        "catgId": 10,
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Books",
+        "question": "Which classic novel was written by Mary Shelley?",
+        "correct_answer": "Frankenstein",
+        "incorrect_answers": ["Dracula", "Pride and Prejudice", "Jane Eyre"]
+      }
+    ],
+    "film": [
+      {
+        "id": 11,
+        "catgId": 11,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Film",
+        "question": "Who directed the movie 'Inception'?",
+        "correct_answer": "Christopher Nolan",
+        "incorrect_answers": [
+          "Quentin Tarantino",
+          "Steven Spielberg",
+          "Martin Scorsese"
+        ]
+      },
+      {
+        "id": 12,
+        "catgId": 11,
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Film",
+        "question": "Which actor played the character Tony Stark in the Marvel Cinematic Universe?",
+        "correct_answer": "Robert Downey Jr.",
+        "incorrect_answers": ["Chris Evans", "Chris Hemsworth", "Mark Ruffalo"]
+      },
+      {
+        "id": 13,
+        "catgId": 11,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Film",
+        "question": "In the movie 'Forrest Gump', what does Forrest's mother say life is like?",
+        "correct_answer": "A box of chocolates",
+        "incorrect_answers": ["A puzzle", "A game", "A journey"]
+      },
+      {
+        "id": 14,
+        "catgId": 11,
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Film",
+        "question": "Who won the Academy Award for Best Actor in a Leading Role for the film 'The Revenant'?",
+        "correct_answer": "Leonardo DiCaprio",
+        "incorrect_answers": [
+          "Brad Pitt",
+          "Matthew McConaughey",
+          "Joaquin Phoenix"
+        ]
+      },
+      {
+        "id": 15,
+        "catgId": 11,
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Film",
+        "question": "Which animated film features a character named Simba?",
+        "correct_answer": "The Lion King",
+        "incorrect_answers": ["Finding Nemo", "Shrek", "Toy Story"]
+      },
+      {
+        "id": 16,
+        "catgId": 11,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Film",
+        "question": "Who played the character Jack Dawson in the movie 'Titanic'?",
+        "correct_answer": "Leonardo DiCaprio",
+        "incorrect_answers": [
+          "Brad Pitt",
+          "Matthew McConaughey",
+          "Joaquin Phoenix"
+        ]
+      },
+      {
+        "id": 17,
+        "catgId": 11,
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Film",
+        "question": "Which film won the Academy Award for Best Picture in 2019?",
+        "correct_answer": "Parasite",
+        "incorrect_answers": ["Joker", "1917", "Once Upon a Time in Hollywood"]
+      },
+      {
+        "id": 18,
+        "catgId": 11,
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Film",
+        "question": "Who directed the movie 'The Shawshank Redemption'?",
+        "correct_answer": "Frank Darabont",
+        "incorrect_answers": [
+          "Quentin Tarantino",
+          "Christopher Nolan",
+          "Steven Spielberg"
+        ]
+      },
+      {
+        "id": 19,
+        "catgId": 11,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Film",
+        "question": "In the movie 'The Matrix', what is the name of the main character played by Keanu Reeves?",
+        "correct_answer": "Neo",
+        "incorrect_answers": ["Morpheus", "Trinity", "Agent Smith"]
+      },
+      {
+        "id": 20,
+        "catgId": 11,
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Film",
+        "question": "Who directed the film 'Citizen Kane'?",
+        "correct_answer": "Orson Welles",
+        "incorrect_answers": [
+          "Alfred Hitchcock",
+          "Stanley Kubrick",
+          "Francis Ford Coppola"
+        ]
+      }
+    ],
+    "music": [
+      {
+        "id": 21,
+        "catgId": 12,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Music",
+        "question": "Which singer is known as the 'King of Pop'?",
+        "correct_answer": "Michael Jackson",
+        "incorrect_answers": ["Elvis Presley", "Prince", "Whitney Houston"]
+      },
+      {
+        "id": 22,
+        "catgId": 12,
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Music",
+        "question": "In which year did The Beatles release their album 'Abbey Road'?",
+        "correct_answer": "1969",
+        "incorrect_answers": ["1967", "1971", "1973"]
+      },
+      {
+        "id": 23,
+        "catgId": 12,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Music",
+        "question": "Who is the lead vocalist of the band Queen?",
+        "correct_answer": "Freddie Mercury",
+        "incorrect_answers": ["David Bowie", "Elton John", "Axl Rose"]
+      },
+      {
+        "id": 24,
+        "catgId": 12,
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Music",
+        "question": "Which album by Adele won the Grammy Award for Album of the Year in 2012?",
+        "correct_answer": "21",
+        "incorrect_answers": ["19", "25", "Adele never won a Grammy"]
+      },
+      {
+        "id": 25,
+        "catgId": 12,
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Music",
+        "question": "Who wrote the song 'Bohemian Rhapsody'?",
+        "correct_answer": "Freddie Mercury",
+        "incorrect_answers": ["David Bowie", "Elton John", "John Lennon"]
+      },
+      {
+        "id": 26,
+        "catgId": 12,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Music",
+        "question": "Which female artist released the album '1989'?",
+        "correct_answer": "Taylor Swift",
+        "incorrect_answers": ["Adele", "Beyoncé", "Rihanna"]
+      },
+      {
+        "id": 27,
+        "catgId": 12,
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Music",
+        "question": "In which year did Elvis Presley die?",
+        "correct_answer": "1977",
+        "incorrect_answers": ["1967", "1987", "1997"]
+      },
+      {
+        "id": 28,
+        "catgId": 12,
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Music",
+        "question": "Who composed the 'Moonlight Sonata'?",
+        "correct_answer": "Ludwig van Beethoven",
+        "incorrect_answers": [
+          "Wolfgang Amadeus Mozart",
+          "Johann Sebastian Bach",
+          "Frédéric Chopin"
+        ]
+      },
+      {
+        "id": 29,
+        "catgId": 12,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Music",
+        "question": "Which rapper released the album 'The Marshall Mathers LP'?",
+        "correct_answer": "Eminem",
+        "incorrect_answers": ["Jay-Z", "Kanye West", "Drake"]
+      },
+      {
+        "id": 30,
+        "catgId": 12,
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Music",
+        "question": "Who was the first female artist to be inducted into the Rock and Roll Hall of Fame?",
+        "correct_answer": "Aretha Franklin",
+        "incorrect_answers": ["Janis Joplin", "Madonna", "Tina Turner"]
+      }
+    ],
+    "musicals_and_theater": [
+      {
+        "id": 31,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Musicals & Theater",
+        "question": "Which musical features the song 'Memory'?",
+        "correct_answer": "Cats",
+        "incorrect_answers": [
+          "Les Misérables",
+          "The Phantom of the Opera",
+          "Rent"
+        ]
+      },
+      {
+        "id": 32,
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Musicals & Theater",
+        "question": "Who wrote the musical 'Hamilton'?",
+        "correct_answer": "Lin-Manuel Miranda",
+        "incorrect_answers": [
+          "Andrew Lloyd Webber",
+          "Stephen Sondheim",
+          "Tim Rice"
+        ]
+      },
+      {
+        "id": 33,
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Musicals & Theater",
+        "question": "In 'The Phantom of the Opera', what is the name of the masked character?",
+        "correct_answer": "Erik",
+        "incorrect_answers": ["Raoul", "Philippe", "Armand"]
+      },
+      {
+        "id": 34,
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Musicals & Theater",
+        "question": "Which play by William Shakespeare features the character Othello?",
+        "correct_answer": "Othello",
+        "incorrect_answers": ["Hamlet", "Macbeth", "Romeo and Juliet"]
+      },
+      {
+        "id": 35,
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Musicals & Theater",
+        "question": "Who wrote the play 'A Streetcar Named Desire'?",
+        "correct_answer": "Tennessee Williams",
+        "incorrect_answers": [
+          "Arthur Miller",
+          "Edward Albee",
+          "Lorraine Hansberry"
+        ]
+      }
+    ]
+  }
+}

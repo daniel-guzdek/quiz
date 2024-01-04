@@ -8,8 +8,8 @@ const initialState = {
   usersMode: "",
   isPlayersModeSet: false,
   isFormValid: false,
+  isConfigReady: false,
   usersNum: 0,
-  numOfQuestions: 0,
   actualUserId: 1,
   users: [],
 };
@@ -23,8 +23,8 @@ const reducer = (state: InitialState = initialState, action: Action) => {
         usersMode: "",
         isPlayersModeSet: false,
         isFormValid: false,
+        isConfigReady: false,
         usersNum: 0,
-        numOfQuestions: 0,
         actualUserId: 1,
         users: [],
       };
@@ -67,6 +67,11 @@ const reducer = (state: InitialState = initialState, action: Action) => {
       return {
         ...state,
         isFormValid: action.payload,
+      };
+    case ActionType.SET_IS_CONFIG_READY:
+      return {
+        ...state,
+        isConfigReady: action.payload,
       };
     case ActionType.CLEAR_USERS_ARRAY:
       return {

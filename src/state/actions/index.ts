@@ -23,6 +23,11 @@ interface SetIsFormValidAction {
   payload: { isFormValid: boolean };
 }
 
+interface SetIsConfigReadyAction {
+  type: ActionType.SET_IS_CONFIG_READY;
+  payload: { isConfigReady: boolean };
+}
+
 interface AddUserNameAction {
   type: ActionType.ADD_USER_NAME;
   payload: {
@@ -100,6 +105,7 @@ export type Action =
   | SetMultiPlayerModeAction
   | SetNumberOfPlayersAction
   | SetIsFormValidAction
+  | SetIsConfigReadyAction
   | AddUserNameAction
   | ClearUsersArrayAction
   | SetQuizModeAction

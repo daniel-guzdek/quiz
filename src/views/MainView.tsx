@@ -12,12 +12,12 @@ import ConfigSummary from "./ConfigSummary";
 import "../styles/app.less";
 import Btn from "../components/common/Buttons/Button";
 import Title from "../components/common/Title/Title";
+import QuestionRoundView from "./QuestionRoundView";
 
 const MainView = () => {
   const dispatch = useDispatch();
-  const { isPlayersModeSet, isFormValid, quizMode, users } = useSelector(
-    (state: RootState) => state.quiz
-  );
+  const { isPlayersModeSet, isFormValid, quizMode, users, isConfigReady } =
+    useSelector((state: RootState) => state.quiz);
 
   const reduxStore = useSelector((state: RootState) => state.quiz);
   console.log(reduxStore);
@@ -46,7 +46,10 @@ const MainView = () => {
           <Box>
             {isFormValid && <QuizModesPanel />}
             {quizMode && <QuizModeSettingsView />}
-            {quizMode && questionsCanLoad(users) && <ConfigSummary />}
+            {quizMode && questionsCanLoad(users) && !isConfigReady && (
+              <ConfigSummary />
+            )}
+            {isConfigReady && <QuestionRoundView />}
           </Box>
         </Box>
       </Container>

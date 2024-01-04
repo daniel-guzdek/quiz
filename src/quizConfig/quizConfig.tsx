@@ -2,6 +2,7 @@ import { Category } from "../ts/enums/appEnums";
 import { GiHorseHead, GiAxeSword, GiBookmark } from "react-icons/gi";
 
 export const quizConfig = {
+  isMockedDB: false,
   quizModes: [
     {
       id: 1,

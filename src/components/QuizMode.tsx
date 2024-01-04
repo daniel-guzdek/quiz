@@ -58,7 +58,7 @@ const QuizMode = ({ variant, icon, description }: IQuizModeProps) => {
           },
         })
       );
-  }, [questions, dispatch]);
+  }, [questions, dispatch, variant]);
 
   return (
     <Card onClick={() => modeHandler()} className="quiz-mode-card">

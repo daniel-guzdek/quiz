@@ -4,6 +4,7 @@ export enum ActionType {
   SET_MULTI_PLAYER_MODE = "set-multi-player-mode",
   SELECT_NUMBER_OF_PLAYERS = "select-number-of-players",
   SET_IS_FORM_VALID = "set-is-form-valid",
+  SET_IS_CONFIG_READY = "set-is-config-ready",
   ADD_USER_NAME = "add-user-name",
   CLEAR_USERS_ARRAY = "clear-users-array",
   SET_QUIZ_MODE = "set-quiz-mode",

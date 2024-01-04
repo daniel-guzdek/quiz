@@ -72,28 +72,21 @@ const useAcceptCatg = ({
   );
 
   const handleAcceptCatg = useCallback(() => {
-    if (quizMode === mode.ON_THE_EDGE) {
-      const actualUserId = userId + 1 > usersNum ? 1 : userId + 1;
-      setActualUserId(actualUserId);
-      dispatch({
-        type: "set-actual-user-id",
-        payload: userId + 1 > usersNum ? 1 : userId + 1,
-      });
-      dispatch({
-        type: "questions-should-load",
-        payload: questionsShouldLoadPayload,
-      });
-    } else {
-      setActualUserId(userId);
-      dispatch({
-        type: "set-player-quiz-data",
-        payload: getPlayerQuizDataPayload(userId, true),
-      });
-      dispatch({
-        type: "questions-should-load",
-        payload: questionsShouldLoadPayload,
-      });
-    }
+    const actualuserId =
+      quizMode === mode.ON_THE_EDGE ? (userId % usersNum) + 1 : userId;
+    setActualUserId(actualuserId);
+    dispatch({
+      type: "set-actual-user-id",
+      payload: actualuserId,
+    });
+    dispatch({
+      type: "set-player-quiz-data",
+      payload: getPlayerQuizDataPayload(actualuserId, true),
+    });
+    dispatch({
+      type: "questions-should-load",
+      payload: questionsShouldLoadPayload,
+    });
   }, [
     dispatch,
     userId,

@@ -30,7 +30,7 @@ const CatgBtn = (props: ICategoryBtnProps) => {
     !props.selectedCatg.length && setIsDisabled(false);
   }, [props.selectedCatg]);
 
-  const catgObj = {
+  const catg = {
     id: props.categoryId,
     name: props.categoryName,
     color: props.bgColor,
@@ -38,23 +38,17 @@ const CatgBtn = (props: ICategoryBtnProps) => {
 
   const handleCategoryBtn = () => {
     if (quizMode === mode.ON_THE_EDGE) {
-      setSelectedCatg((selectedCatg: SelectedCatg) => [
-        ...selectedCatg,
-        catgObj,
-      ]);
+      setSelectedCatg((selectedCatg: SelectedCatg) => [...selectedCatg, catg]);
       dispatch({
         type: "set-player-quiz-data",
         payload: {
           userId: selectedUserId && indicatedUserId,
-          selectedCatg: [...selectedCatg, catgObj],
+          selectedCatg: [...selectedCatg, catg],
           questionsShouldLoad: false,
         },
       });
     } else {
-      setSelectedCatg((selectedCatg: SelectedCatg) => [
-        ...selectedCatg,
-        catgObj,
-      ]);
+      setSelectedCatg((selectedCatg: SelectedCatg) => [...selectedCatg, catg]);
     }
 
     setIsDisabled(true);

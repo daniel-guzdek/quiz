@@ -78,6 +78,15 @@ export const setIsFormValid = (isFormValid: boolean) => {
   };
 };
 
+export const setIsConfigReady = (isConfigReady: boolean) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.SET_IS_CONFIG_READY,
+      payload: { isConfigReady },
+    });
+  };
+};
+
 export const setQuizMode = (quizMode: string) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({

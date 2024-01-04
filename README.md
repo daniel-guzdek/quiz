@@ -2,22 +2,18 @@
 
 The 'Quiz' project was created using technologies such as React, TypeScript and Redux.\
 
-## Start Project
-
-In the project directory:\
+## Start Project on local machine
 
 ### `npm install`
 
-To install all dependencies.\
+Open terminal and run:
+
+### `json-server --watch db.json --port 8000`
+
+Open [http://localhost:8000/data]
+
+Open second terminal and run:
 
 ### `npm start`
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.\
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
+Open [http://localhost:3000]

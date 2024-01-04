@@ -6,8 +6,8 @@ export interface InitialState {
   usersMode: string;
   isPlayersModeSet: boolean;
   isFormValid: boolean;
+  isConfigReady: boolean;
   usersNum: number;
-  numOfQuestions: number;
   users: Array<User>;
 }
 
