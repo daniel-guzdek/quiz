@@ -40,7 +40,7 @@ const useAcceptCatg = ({
 
   useEffect(() => {
     quizMode !== "OMNIBUS" && actualUserId && loadData();
-  }, [actualUserId, quizMode]);
+  }, [actualUserId]);
 
   useEffect(() => {
     if (quizMode !== "OMNIBUS" && questions.length && !loading) {

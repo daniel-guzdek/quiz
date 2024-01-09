@@ -42,31 +42,6 @@ export const useFetch = (
     return questions;
   };
 
-  // const mockedUrls =
-  //   quizMode !== "OMNIBUS" && catIds?.length
-  //     ? catIds?.map(
-  //         (id) => `/data/${id}&_limit=${amount}`
-  //       )
-  //     : [`https://opentdb.com/api.php?amount=${allCatgAmount}`];
-
-  // const loadMockedData = async () => {
-  //   setLoading(true);
-
-  //   Promise.all(urls.map((endpoint) => axios.get(endpoint)))
-  //     .then((res) => {
-  //       setError(null);
-  //       const results = res.map((el) => el.data.results);
-  //       setQuestions(results);
-  //       return results;
-  //     })
-  //     .catch((err) => setError(err))
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-
-  //   return questions;
-  // };
-
   return {
     questions,
     error,

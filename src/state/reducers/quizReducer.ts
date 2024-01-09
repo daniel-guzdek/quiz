@@ -131,6 +131,24 @@ const reducer = (state: InitialState = initialState, action: Action) => {
         ...state,
         score: action.payload,
       };
+    case ActionType.ADD_CORRECT_ANSWER_SCORE:
+      return {
+        ...state,
+        users: [
+          ...state.users,
+          (state.users[action.payload.userId - 1].correctAnswers =
+            action.payload.amount),
+        ].splice(0, state.users.length),
+      };
+    case ActionType.ADD_INCORRECT_ANSWER_SCORE:
+      return {
+        ...state,
+        users: [
+          ...state.users,
+          (state.users[action.payload.userId - 1].incorrectAnswers =
+            action.payload.amount),
+        ].splice(0, state.users.length),
+      };
     default:
       return state;
   }

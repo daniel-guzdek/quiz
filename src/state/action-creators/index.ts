@@ -156,3 +156,27 @@ export const resetUserCatg = (userId: number, users: User[]) => {
     });
   };
 };
+
+export const addCorrectAnswerScore = (userId: number, amount: number) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.ADD_CORRECT_ANSWER_SCORE,
+      payload: {
+        userId,
+        amount,
+      },
+    });
+  };
+};
+
+export const addIncorrectAnswerScore = (userId: number, amount: number) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.ADD_INCORRECT_ANSWER_SCORE,
+      payload: {
+        userId,
+        amount,
+      },
+    });
+  };
+};

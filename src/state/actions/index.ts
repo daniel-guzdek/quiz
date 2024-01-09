@@ -99,6 +99,16 @@ interface CountScoreAction {
   payload: { amount: number };
 }
 
+interface AddCorrectAnswerScoreAction {
+  type: ActionType.ADD_CORRECT_ANSWER_SCORE;
+  payload: { userId: number; amount: number };
+}
+
+interface AddIncorrectAnswerScoreAction {
+  type: ActionType.ADD_INCORRECT_ANSWER_SCORE;
+  payload: { userId: number; amount: number };
+}
+
 export type Action =
   | ResetStoreAction
   | SetSinglePlayerModeAction
@@ -114,4 +124,6 @@ export type Action =
   | SetQuestionsForEachUser
   | ResetUserCatg
   | SetActualUserIdAction
-  | CountScoreAction;
+  | CountScoreAction
+  | AddCorrectAnswerScoreAction
+  | AddIncorrectAnswerScoreAction;

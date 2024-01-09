@@ -15,4 +15,6 @@ export enum ActionType {
   SET_QUESTIONS_FOR_EACH_USER = "set-questions-for-each-user",
   SET_ACTUAL_USER_ID = "set-actual-user-id",
   COUNT_SCORE = "count-score",
+  ADD_CORRECT_ANSWER_SCORE = "add-correct-answer-score",
+  ADD_INCORRECT_ANSWER_SCORE = "add-incorrect-answer-score",
 }

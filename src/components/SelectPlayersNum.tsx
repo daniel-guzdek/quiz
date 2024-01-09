@@ -24,14 +24,7 @@ const SelectNumberOfPlayers = () => {
   };
 
   return (
-    <Box
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <Box className="centered centered-column">
       <FormControl sx={{ m: 1, minWidth: 135 }}>
         <InputLabel id="select-helper-label">Number of Players</InputLabel>
         <Select
