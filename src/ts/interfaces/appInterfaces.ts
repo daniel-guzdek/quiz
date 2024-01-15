@@ -8,6 +8,7 @@ export interface InitialState {
   isFormValid: boolean;
   isConfigReady: boolean;
   usersNum: number;
+  actualUserId: number;
   users: Array<User>;
 }
 

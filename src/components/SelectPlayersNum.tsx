@@ -30,11 +30,11 @@ const SelectNumberOfPlayers = () => {
         <Select
           labelId="select-helper-label"
           id="select-helper"
-          value={usersNum}
+          value={String(usersNum)}
           label="Number of Players"
           onChange={handleChange}
         >
-          <MenuItem value="">
+          <MenuItem value={0}>
             <em>None</em>
           </MenuItem>
           <MenuItem value={1}>1</MenuItem>

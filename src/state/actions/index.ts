@@ -15,17 +15,17 @@ interface SetMultiPlayerModeAction {
 
 interface SetNumberOfPlayersAction {
   type: ActionType.SELECT_NUMBER_OF_PLAYERS;
-  payload: { usersNum: number };
+  payload: number;
 }
 
 interface SetIsFormValidAction {
   type: ActionType.SET_IS_FORM_VALID;
-  payload: { isFormValid: boolean };
+  payload: boolean;
 }
 
 interface SetIsConfigReadyAction {
   type: ActionType.SET_IS_CONFIG_READY;
-  payload: { isConfigReady: boolean };
+  payload: boolean;
 }
 
 interface AddUserNameAction {
@@ -91,7 +91,7 @@ interface ResetUserCatg {
 
 interface SetActualUserIdAction {
   type: ActionType.SET_ACTUAL_USER_ID;
-  payload: { userId: number };
+  payload: number;
 }
 
 interface CountScoreAction {

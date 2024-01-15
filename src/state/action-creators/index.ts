@@ -33,7 +33,7 @@ export const setNumberOfPlayers = (usersNum: number) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SELECT_NUMBER_OF_PLAYERS,
-      payload: { usersNum },
+      payload: usersNum,
     });
   };
 };
@@ -73,7 +73,7 @@ export const setIsFormValid = (isFormValid: boolean) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SET_IS_FORM_VALID,
-      payload: { isFormValid },
+      payload: isFormValid,
     });
   };
 };
@@ -82,7 +82,7 @@ export const setIsConfigReady = (isConfigReady: boolean) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SET_IS_CONFIG_READY,
-      payload: { isConfigReady },
+      payload: isConfigReady,
     });
   };
 };
@@ -140,7 +140,7 @@ export const setActualUserId = (userId: number) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.SET_ACTUAL_USER_ID,
-      payload: { userId },
+      payload: userId,
     });
   };
 };
