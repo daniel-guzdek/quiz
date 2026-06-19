@@ -1,23 +1,15 @@
-import { User } from "../ts/types/appTypes";
+import type { User } from "../types";
 
+/**
+ * Returns the ID of the user whose category the given userId must select
+ * in ON THE EDGE mode. Players are paired: 1↔2, 3↔4, etc.
+ * If the total number of players is odd, the last player picks for themselves.
+ */
 export const getIndicatedUserId = (userId: number, users: User[]): number => {
-  const isOddUsersNum = users.length % 2 === 1;
-  const isLastUserId = userId === users.length;
+  const isOdd = users.length % 2 === 1;
+  const isLast = userId === users.length;
 
-  switch (true) {
-    case isOddUsersNum && isLastUserId:
-      return userId;
-    case userId === 1:
-      return users[userId].id;
-    case userId === 2:
-      return users[userId - 2].id;
-    case userId === 3:
-      return users[userId].id;
-    case userId === 4:
-      return users[userId - 2].id;
-    case userId === 5:
-      return userId;
-    default:
-      return userId;
-  }
+  if (isOdd && isLast) return userId;
+
+  return userId % 2 === 1 ? userId + 1 : userId - 1;
 };

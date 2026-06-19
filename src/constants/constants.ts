@@ -1,6 +1,0 @@
-export const mode = {
-  MY_THING: "MY THING",
-  MY_THING_VS_MY_THING: "MY THING VS. MY THING",
-  OMNIBUS: "OMNIBUS",
-  ON_THE_EDGE: "ON THE EDGE",
-};
