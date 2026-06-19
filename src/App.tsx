@@ -1,12 +1,16 @@
-import React from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MainView from "./views/MainView";
 
-const App: React.FC = () => {
-  return (
-    <>
-      <MainView />
-    </>
-  );
-};
+const theme = createTheme({
+  typography: {
+    fontFamily: '"Inter", sans-serif',
+  },
+});
+
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <MainView />
+  </ThemeProvider>
+);
 
 export default App;
