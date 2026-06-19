@@ -1,110 +1,192 @@
-import { useDispatch, useSelector } from "react-redux";
-// import { RootState } from "../../state/reducers";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import { shuffleAnswers } from "./utils/shuffleAnswers";
-import { User } from "../../ts/types/appTypes";
-import { RootState } from "../../state/reducers";
-import { quizConfig } from "../../quizConfig/quizConfig";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import LinearProgress from "@mui/material/LinearProgress";
+import { useAppDispatch } from "../../store/hooks";
+import { answerQuestion } from "../../store/quizSlice";
+import { shuffleArray } from "../../utils/shuffleArray";
+import type { Question as QuestionType } from "../../types";
+
+interface Props {
+  question: QuestionType;
+  questionNumber: number;
+  totalQuestions: number;
+  userId: number;
+  onNext: (isCorrect: boolean) => void;
+}
+
+type AnswerState = "idle" | "correct" | "incorrect" | "timeout";
+
+const TIMER_MS = 5000;
 
 const Question = ({
-  actualUserId,
   question,
-  actualQuestion,
-  setActualQuestion,
-  actualUserQstIndex,
-  setActualUserQstIndex,
-  lastQuestionIndexBeforeNextUser,
-  setLastQuestionIndexBeforeNextUser,
-}: any) => {
-  // const wholeState = useSelector((state: RootState) => state.quiz);
-  // console.log(wholeState);
+  questionNumber,
+  totalQuestions,
+  userId,
+  onNext,
+}: Props) => {
+  const dispatch = useAppDispatch();
+  const [answerState, setAnswerState] = useState<AnswerState>("idle");
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [timeLeft, setTimeLeft] = useState(TIMER_MS);
 
-  const user = useSelector(
-    (state: RootState): User => state.quiz["users"][actualUserId - 1]
-  );
-  console.log(user);
-
-  const { quizMode, users } = useSelector((state: RootState) => state.quiz);
-
-  const dispatch = useDispatch();
-
-  const combinedAnswers = [
-    question.correct_answer,
-    ...question.incorrect_answers,
-  ];
-
-  const answers = shuffleAnswers(combinedAnswers);
-
-  const setAnswer = (answer: string) => {
-    // 1. check is Right?
-    if (answer === question.correct_answer) {
-      console.log("YES!");
-      dispatch({
-        type: "add-correct-answer-score",
-        payload: {
-          // userId: selectedUserId && indicatedUserId,
-          userId: actualUserId,
-          amount: user.correctAnswers + 1,
-        },
-      });
-    } else {
-      console.log("NO!");
-      dispatch({
-        type: "add-incorrect-answer-score",
-        payload: {
-          // userId: selectedUserId && indicatedUserId,
-          userId: actualUserId,
-          amount: user.incorrectAnswers + 1,
-        },
-      });
-    }
-    // after setting user's answer set colors (blue on user's answer and after 1 second green for right answer or red and green (blue --> red if user's answer is incorrect and green for correct))
-    // 2. set actual user question index for +1 after 2 seconds
-    console.log(user.quizData.questions.length);
-    console.log(actualUserQstIndex + 1);
-
-    // SINGLE PLAYER
-    user.quizData.questions.length > actualUserQstIndex + 1 &&
-      setActualUserQstIndex(actualUserQstIndex + 1);
-
-    // MULTI PLAYER
-    if (
-      quizMode === "MULTI PLAYER" &&
-      actualUserQstIndex + 1 ===
-        user.quizData.questions.length / quizConfig.questions.amount
-    ) {
-      // setActualUserId(actualUserId);
-      dispatch({
-        type: "set-actual-user-id",
-        payload: actualUserId + 1,
-      });
-    }
-    // 3. check is game over & check who is winner (??? or just statistics for users)
-  };
-
-  const renderOptions = answers?.map((answer: any, index: number) => {
-    return (
-      <Button key={index} onClick={() => setAnswer(answer)}>
-        {answer}
-      </Button>
-    );
+  // Keep a stable ref so effects don't need onNext in their dep array
+  const onNextRef = useRef(onNext);
+  useEffect(() => {
+    onNextRef.current = onNext;
   });
 
-  console.log(answers);
+  // Shuffle once per question — memoised so a re-render caused by selecting an
+  // answer does not reorder the buttons mid-interaction.
+  const answers = useMemo(
+    () =>
+      shuffleArray([question.correct_answer, ...question.incorrect_answers]),
+    [question],
+  );
+
+  // Reset all state when a new question arrives
+  useEffect(() => {
+    setTimeLeft(TIMER_MS);
+    setAnswerState("idle");
+    setSelectedAnswer(null);
+  }, [question]);
+
+  // Countdown timer — only active while the player hasn't answered yet
+  useEffect(() => {
+    if (answerState !== "idle") return;
+
+    const timeoutId = setTimeout(() => {
+      dispatch(answerQuestion({ userId, isCorrect: false }));
+      setAnswerState("timeout");
+      setTimeout(() => onNextRef.current(false), 1200);
+    }, TIMER_MS);
+
+    const intervalId = setInterval(() => {
+      setTimeLeft((prev) => Math.max(0, prev - 100));
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+    };
+  }, [answerState, question, dispatch, userId]);
+
+  const handleAnswer = (answer: string) => {
+    if (answerState !== "idle") return;
+
+    const isCorrect = answer === question.correct_answer;
+    setSelectedAnswer(answer);
+    setAnswerState(isCorrect ? "correct" : "incorrect");
+    dispatch(answerQuestion({ userId, isCorrect }));
+    setTimeout(() => onNextRef.current(isCorrect), 1200);
+  };
+
+  const getButtonVariant = (answer: string): "contained" | "outlined" => {
+    if (answerState === "idle") return "outlined";
+    if (answer === question.correct_answer) return "contained";
+    if (answer === selectedAnswer) return "contained";
+    return "outlined";
+  };
+
+  const getAnswerSx = (answer: string) => {
+    if (answerState === "idle") return {};
+    if (answer === question.correct_answer)
+      return {
+        "&.Mui-disabled": {
+          bgcolor: "#2e7d32",
+          color: "white",
+          borderColor: "#2e7d32",
+        },
+      };
+    if (answer === selectedAnswer)
+      return {
+        "&.Mui-disabled": {
+          bgcolor: "#c62828",
+          color: "white",
+          borderColor: "#c62828",
+        },
+      };
+    return {};
+  };
+
+  const progress = (questionNumber / totalQuestions) * 100;
+  const timerProgress = (timeLeft / TIMER_MS) * 100;
+  const timerColor =
+    timerProgress > 50 ? "#2e7d32" : timerProgress > 25 ? "#f57c00" : "#c62828";
 
   return (
-    <>
-      <div>Question {actualUserQstIndex + 1}</div>
+    <Box sx={{ width: "100%", maxWidth: 600 }}>
+      <Box sx={{ mb: 1, display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="caption" color="text.secondary">
+          Question {questionNumber} of {totalQuestions}
+        </Typography>
+        <Typography variant="caption" color="text.secondary">
+          {question.difficulty} {"\u00b7"} {question.category}
+        </Typography>
+      </Box>
 
-      <Card sx={{ minWidth: 275 }}>
+      <LinearProgress
+        variant="determinate"
+        value={progress}
+        sx={{ mb: 1, borderRadius: 1 }}
+      />
+
+      <LinearProgress
+        variant="determinate"
+        value={timerProgress}
+        sx={{
+          mb: 2,
+          borderRadius: 1,
+          "& .MuiLinearProgress-bar": {
+            bgcolor: timerColor,
+            transition:
+              "background-color 0.4s, transform 0.15s linear !important",
+          },
+        }}
+      />
+
+      <Card elevation={2}>
         <CardContent>
-          <p>{question.question}</p>
+          <Typography
+            variant="h6"
+            gutterBottom
+            textAlign="center"
+            sx={{ mb: 3 }}
+          >
+            {question.question}
+          </Typography>
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 1.5,
+            }}
+          >
+            {answers.map((answer, index) => (
+              <Button
+                key={index}
+                variant={getButtonVariant(answer)}
+                disabled={answerState !== "idle"}
+                onClick={() => handleAnswer(answer)}
+                sx={{
+                  textTransform: "none",
+                  fontSize: "0.9rem",
+                  py: 1.5,
+                  ...getAnswerSx(answer),
+                }}
+              >
+                {answer}
+              </Button>
+            ))}
+          </Box>
         </CardContent>
-        {renderOptions}
       </Card>
-    </>
+    </Box>
   );
 };
 
