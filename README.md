@@ -8,12 +8,12 @@ The 'Quiz' project was created using technologies such as React, TypeScript and 
 
 Open terminal and run:
 
-### `json-server --watch db.json --port 8000`
+### `npm run api`
 
 Open [http://localhost:8000/data]
 
 Open second terminal and run:
 
-### `npm start`
+### `npm run dev`
 
-Open [http://localhost:3000]
+Open [http://localhost:5173]
