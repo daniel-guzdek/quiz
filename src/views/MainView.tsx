@@ -48,22 +48,24 @@ const MainView = () => {
               alignItems: "center",
               gap: 2,
               width: "100%",
-              height: "20vh",
-              justifyContent: "center",
+              height: "18vh",
+              justifyContent: "flex-end",
               position: "relative",
             }}
           >
             <Typography variant="h2">QUIZ</Typography>
-            {(isPlayersModeSet || isFormValid) && (
-              <Button
-                variant="outlined"
-                color="error"
-                size="small"
-                onClick={() => dispatch(resetStore())}
-              >
-                Reset
-              </Button>
-            )}
+            <div style={{ height: 40 }}>
+              {(isPlayersModeSet || isFormValid) && (
+                <Button
+                  variant="outlined"
+                  color="error"
+                  size="small"
+                  onClick={() => dispatch(resetStore())}
+                >
+                  Reset
+                </Button>
+              )}
+            </div>
           </Box>
 
           <Box

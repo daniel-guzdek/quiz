@@ -19,7 +19,9 @@ const CategorySelectionView = () => {
         pt: 4,
       }}
     >
-      <Typography variant="h4">{quizMode}</Typography>
+      <Typography variant="h4" style={{ textAlign: "center" }}>
+        {quizMode}
+      </Typography>
 
       <Box
         sx={{
