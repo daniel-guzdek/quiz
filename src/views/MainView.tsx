@@ -44,10 +44,11 @@ const MainView = () => {
           <Box
             sx={{
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               gap: 2,
-              mb: 2,
               width: "100%",
+              height: "20vh",
               justifyContent: "center",
               position: "relative",
             }}
@@ -59,33 +60,39 @@ const MainView = () => {
                 color="error"
                 size="small"
                 onClick={() => dispatch(resetStore())}
-                sx={{ position: "absolute", right: 0 }}
               >
                 Reset
               </Button>
             )}
           </Box>
 
-          {isGameOver && <ResultsView />}
-
-          {!isGameOver && (
-            <>
-              {!isFormValid && (
-                <>
-                  {!isPlayersModeSet && <UserModeView />}
-                  {isPlayersModeSet && <UserFormView />}
-                </>
-              )}
-
-              {isFormValid && !quizMode && <QuizModesPanel />}
-
-              {quizMode && !canLoad && <CategorySelectionView />}
-
-              {quizMode && canLoad && !isConfigReady && <ConfigSummaryView />}
-
-              {isConfigReady && <GameView />}
-            </>
-          )}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+              mb: 2,
+              width: "100%",
+              justifyContent: "center",
+              position: "relative",
+            }}
+          >
+            {isGameOver && <ResultsView />}
+            {!isGameOver && (
+              <>
+                {!isFormValid && (
+                  <>
+                    {!isPlayersModeSet && <UserModeView />}
+                    {isPlayersModeSet && <UserFormView />}
+                  </>
+                )}
+                {isFormValid && !quizMode && <QuizModesPanel />}
+                {quizMode && !canLoad && <CategorySelectionView />}
+                {quizMode && canLoad && !isConfigReady && <ConfigSummaryView />}
+                {isConfigReady && <GameView />}
+              </>
+            )}
+          </Box>
         </Box>
       </Container>
     </>

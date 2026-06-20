@@ -54,6 +54,21 @@ form {
   width: 300px;
   height: 220px;
   margin: 10px;
+  .quiz-mode-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    .quiz-mode-icon,
+    .quiz-mode-variant,
+    .quiz-mode-description {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .quiz-mode-description {
+      align-items: flex-start;
+    }
+  }
 }
 
 .catg-wrapper {

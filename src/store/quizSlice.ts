@@ -52,9 +52,7 @@ const quizSlice = createSlice({
 
     setIsConfigReady: (state, action: PayloadAction<boolean>) => {
       state.isConfigReady = action.payload;
-      // Reset activeUserId to 1 so the quiz always starts from the first player.
-      // ON THE EDGE category selection increments activeUserId past users.length,
-      // so we must restore it here before the question round begins.
+
       if (action.payload) {
         state.activeUserId = 1;
       }

@@ -19,9 +19,7 @@ const CategorySelectionView = () => {
         pt: 4,
       }}
     >
-      <Typography variant="h4" fontWeight={700}>
-        {quizMode}
-      </Typography>
+      <Typography variant="h4">{quizMode}</Typography>
 
       <Box
         sx={{
@@ -29,6 +27,7 @@ const CategorySelectionView = () => {
           flexWrap: "wrap",
           gap: 3,
           justifyContent: "center",
+          maxWidth: "800px",
         }}
       >
         {users.map((user) => (

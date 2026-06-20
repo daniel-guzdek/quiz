@@ -41,7 +41,6 @@ const CategorySelector = ({ userId, userName, users, quizMode }: Props) => {
   const isOddLastPlayer =
     isOnTheEdge && indicatedUserId === userId && users.length % 2 === 1;
 
-  // For ON THE EDGE: auto-assign a random category when it's the odd last player's turn
   useEffect(() => {
     if (isOnTheEdge && activeUserId === userId && isOddLastPlayer) {
       const randomCatg =
@@ -68,7 +67,6 @@ const CategorySelector = ({ userId, userName, users, quizMode }: Props) => {
     }
   }, [activeUserId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Determine visibility
   const user = users.find((u) => u.id === userId);
   const isVisible = isOnTheEdge
     ? activeUserId === userId && !isOddLastPlayer
@@ -144,18 +142,27 @@ const CategorySelector = ({ userId, userName, users, quizMode }: Props) => {
         {instruction}
       </Typography>
 
-      {selectedCategory && (
-        <Chip
-          label={selectedCategory.name}
-          onDelete={handleReset}
-          sx={{
-            borderColor: selectedCategory.color,
-            color: selectedCategory.color,
-            borderWidth: 2,
-          }}
-          variant="outlined"
-        />
-      )}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: 30,
+        }}
+      >
+        {selectedCategory && (
+          <Chip
+            label={selectedCategory.name}
+            onDelete={handleReset}
+            sx={{
+              borderColor: selectedCategory.color,
+              color: selectedCategory.color,
+              borderWidth: 2,
+            }}
+            variant="outlined"
+          />
+        )}
+      </Box>
 
       <Box
         sx={{
@@ -190,7 +197,7 @@ const CategorySelector = ({ userId, userName, users, quizMode }: Props) => {
         ))}
       </Box>
 
-      <Stack direction="row" spacing={1}>
+      <Stack direction="row" spacing={1} style={{ marginTop: "16px" }}>
         <Button
           variant="outlined"
           color="warning"

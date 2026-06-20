@@ -34,28 +34,23 @@ const Question = ({
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(TIMER_MS);
 
-  // Keep a stable ref so effects don't need onNext in their dep array
   const onNextRef = useRef(onNext);
   useEffect(() => {
     onNextRef.current = onNext;
   });
 
-  // Shuffle once per question — memoised so a re-render caused by selecting an
-  // answer does not reorder the buttons mid-interaction.
   const answers = useMemo(
     () =>
       shuffleArray([question.correct_answer, ...question.incorrect_answers]),
     [question],
   );
 
-  // Reset all state when a new question arrives
   useEffect(() => {
     setTimeLeft(TIMER_MS);
     setAnswerState("idle");
     setSelectedAnswer(null);
   }, [question]);
 
-  // Countdown timer — only active while the player hasn't answered yet
   useEffect(() => {
     if (answerState !== "idle") return;
 

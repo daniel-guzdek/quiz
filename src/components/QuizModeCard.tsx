@@ -41,19 +41,32 @@ const QuizModeCard = ({ variant, icon, description }: Props) => {
             alignItems="center"
             gap={1}
           >
-            <Typography variant="h2" component="div" lineHeight={1}>
-              {icon}
-            </Typography>
-            <Typography variant="h6" fontWeight={700} textAlign="center">
-              {variant}
-            </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              textAlign="center"
-            >
-              {description}
-            </Typography>
+            <div className="quiz-mode-content">
+              <Typography
+                variant="h2"
+                component="div"
+                lineHeight={1}
+                className="quiz-mode-icon"
+              >
+                {icon}
+              </Typography>
+              <Typography
+                variant="h6"
+                fontWeight={700}
+                textAlign="center"
+                className="quiz-mode-variant"
+              >
+                {variant}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                textAlign="center"
+                className="quiz-mode-description"
+              >
+                {description}
+              </Typography>
+            </div>
           </Box>
         </CardContent>
       </CardActionArea>

@@ -12,7 +12,6 @@ type RawQuestion = {
   incorrect_answers: string[];
 };
 
-// All categories now include catgId — flatten the whole data object at once.
 const allRawQuestions: RawQuestion[] = (
   Object.values(db.data) as RawQuestion[][]
 ).flat();
